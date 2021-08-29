@@ -1,13 +1,13 @@
 <h3 matDialogTitle>
   {{data.title}}</h3>
 
-<form [formGroup]="unityForm" autocomplete="off">
+<form [formGroup]="unitForm" autocomplete="off">
   <mat-dialog-content>
     <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
 
       <div fxFlex="40" class="pr-1">
         <mat-form-field class="full-width">
-          <mat-select [formControl]="unityForm.controls['customer_group_id']" placeholder="Grupo *" [disabled]="currentUser.role !== roles.admin">
+          <mat-select [formControl]="unitForm.controls['customer_group_id']" placeholder="Grupo *" [disabled]="currentUser.role !== roles.admin">
             <mat-option *ngFor="let customer_group of customers_groups" [value]="customer_group.customer_group_id">
               {{customer_group.customer_group_name}} </mat-option>
           </mat-select>
@@ -22,7 +22,7 @@
 
       <div fxFlex="40" class="pr-1">
         <mat-form-field class="full-width">
-          <mat-select [formControl]="unityForm.controls['customer_id']" placeholder="Matriz *">
+          <mat-select [formControl]="unitForm.controls['customer_id']" placeholder="Matriz *">
             <mat-option *ngFor="let customer of customers" [value]="customer.customer_id">
               {{customer.customer_business_name}} </mat-option>
           </mat-select>
@@ -47,28 +47,28 @@
 
             <div fxFlex="60" class="pr-1">
               <mat-form-field class="full-width">
-                <input matInput name="customer_unity_name" [formControl]="unityForm.controls['customer_unity_name']"
+                <input matInput name="customer_unit_name" [formControl]="unitForm.controls['customer_unit_name']"
                   placeholder="Unidade *" maxlength="50" upperCase>
               </mat-form-field>
             </div>
 
             <div fxFlex="40" class="pr-1">
               <mat-form-field class="full-width">
-                <input matInput name="customer_cnpj" [formControl]="unityForm.controls['customer_unity_cnpj']"
+                <input matInput name="customer_cnpj" [formControl]="unitForm.controls['customer_unit_cnpj']"
                   placeholder="CNPJ *" maxlength="20" upperCase mask="00.000.000/0000-00">
               </mat-form-field>
             </div>
 
             <div fxFlex="20" class="pr-1">
               <mat-form-field class="full-width">
-                <input matInput name="customer_unity_cep" [formControl]="unityForm.controls['customer_unity_cep']"
+                <input matInput name="customer_unit_cep" [formControl]="unitForm.controls['customer_unit_cep']"
                   placeholder="CEP *" maxlength="9" upperCase mask="00000-000" (change)="getCep()">
               </mat-form-field>
             </div>
 
             <div fxFlex="20" class="pr-1">
               <mat-form-field class="full-width">
-                <mat-select [formControl]="unityForm.controls['customer_unity_uf_id']" placeholder="UF *" (change)="getCities()">
+                <mat-select [formControl]="unitForm.controls['customer_unit_uf_id']" placeholder="UF *" (change)="getCities()">
                   <mat-option *ngFor="let state of states" [value]="state.state_id">
                     {{state.state_name}} </mat-option>
                 </mat-select>
@@ -78,7 +78,7 @@
 
             <div fxFlex="60" class="pr-1">
               <mat-form-field class="full-width">
-                <mat-select [formControl]="unityForm.controls['customer_unity_city_id']" placeholder="Cidade *" >
+                <mat-select [formControl]="unitForm.controls['customer_unit_city_id']" placeholder="Cidade *" >
                   <mat-option *ngFor="let city of cities" [value]="city.city_id">
                     {{city.city_name}} </mat-option>
                 </mat-select>
@@ -87,7 +87,7 @@
 
             <div fxFlex="100" class="pr-1">
               <mat-form-field class="full-width">
-                <textarea matInput upperCase placeholder="Endereço *" name="customer_unity_address" [formControl]="unityForm.controls['customer_unity_address']"></textarea>
+                <textarea matInput upperCase placeholder="Endereço *" name="customer_unit_address" [formControl]="unitForm.controls['customer_unit_address']"></textarea>
               </mat-form-field>
             </div>
           </div>
@@ -106,28 +106,28 @@
 
             <div fxFlex="50" class="pr-1">
               <mat-form-field class="full-width">
-                <input matInput name="responsavel" [formControl]="unityForm.controls['unity_contact_name']"
+                <input matInput name="responsavel" [formControl]="unitForm.controls['unit_contact_name']"
                   placeholder="Responsável *" maxlength="50" upperCase>
               </mat-form-field>
             </div>
 
             <div fxFlex="50" class="pr-1">
               <mat-form-field class="full-width">
-                <input matInput name="email" [formControl]="unityForm.controls['unity_contact_email']"
+                <input matInput name="email" [formControl]="unitForm.controls['unit_contact_email']"
                   placeholder="Email *" maxlength="100" upperCase>
               </mat-form-field>
             </div>
 
             <div fxFlex="100" class="pr-1">
               <mat-form-field class="full-width">
-                <input matInput name="telefones" [formControl]="unityForm.controls['unity_contact_phone']"
+                <input matInput name="telefones" [formControl]="unitForm.controls['unit_contact_phone']"
                   placeholder="Telefones *" maxlength="25" upperCase>
               </mat-form-field>
             </div>          
 
             <div fxFlex="100" class="pr-1">
               <mat-form-field class="full-width">
-                <textarea matInput upperCase placeholder="Observações" maxlength="200"  [formControl]="unityForm.controls['unity_contact_observation']"></textarea>
+                <textarea matInput upperCase placeholder="Observações" maxlength="200"  [formControl]="unitForm.controls['unit_contact_observation']"></textarea>
               </mat-form-field>
             </div>
           </div>
@@ -177,13 +177,13 @@
   <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap" class="mat-dialog-content">
     <div fxFlex="100" class="mt-1">
       <span fxFlex *ngIf="!this.data.new"></span>
-      <button mat-raised-button color="accent" type="button" (click)="deleteUnity()"
+      <button mat-raised-button color="accent" type="button" (click)="deleteunit()"
         *ngIf="!this.data.new" [disabled]="currentUser.role !== roles.admin || currentUser.user_profile_type !== profile.gestor">Excluir</button>
       <span fxFlex></span>
       <button mat-raised-button color="warn" type="button" (click)="dialogRef.close('NOK')">Cancelar</button>
       <span fxFlex></span>
-      <button mat-raised-button class="mat-primary" type="button" (click)="saveUnity()"
-      [disabled]="unityForm.invalid || (currentUser.role !== roles.admin || currentUser.user_profile_type !== profile.gestor)"
+      <button mat-raised-button class="mat-primary" type="button" (click)="saveunit()"
+      [disabled]="unitForm.invalid || (currentUser.role !== roles.admin || currentUser.user_profile_type !== profile.gestor)"
         >Gravar</button>
       <span fxFlex></span>
     </div>

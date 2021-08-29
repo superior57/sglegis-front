@@ -20,13 +20,13 @@ export class UnitiesComponent implements OnInit {
   
   columns = [
     {
-      Propriedade: 'customer_unity_id',
+      Propriedade: 'customer_unit_id',
       Titulo: 'Id da Unidade',
       Visivel: false,
       Largura: 30
     },
     {
-      Propriedade: 'customer_unity_cnpj',
+      Propriedade: 'customer_unit_cnpj',
       Titulo: 'CNPJ',
       Visivel: true,
       Largura:50
@@ -38,31 +38,31 @@ export class UnitiesComponent implements OnInit {
       Largura:70
     },    
     {
-      Propriedade: 'customer_unity_name',
+      Propriedade: 'customer_unit_name',
       Titulo: 'Unidade',
       Visivel: true,
       Largura:100
     },
     {
-      Propriedade: 'customer_unity_address',
+      Propriedade: 'customer_unit_address',
       Titulo: 'Endereço',
       Visivel: true,
       Largura:70
     },        
     {
-      Propriedade: 'unity_contact_name',
+      Propriedade: 'unit_contact_name',
       Titulo: 'Nome do Contato',
       Visivel: true,
       Largura:70
     },
     {
-      Propriedade: 'unity_contact_email',
+      Propriedade: 'unit_contact_email',
       Titulo: 'Email',
       Visivel: true,
       Largura:100
     },
     {
-      Propriedade: 'unity_contact_phone',
+      Propriedade: 'unit_contact_phone',
       Titulo: 'Telefone',
       Visivel: true,
       Largura:50
@@ -109,7 +109,7 @@ export class UnitiesComponent implements OnInit {
   
   getUnities(parameter: any) {
     this.lastSearch = parameter;
-    this.crud.GetParams(this.lastSearch, "/customerunity").subscribe(res => {
+    this.crud.GetParams(this.lastSearch, "/customerunit").subscribe(res => {
       this.rows = [];
       this.rows = res.body;
     })

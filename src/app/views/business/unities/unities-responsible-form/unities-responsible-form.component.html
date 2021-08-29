@@ -13,7 +13,7 @@
                 <input
                   matInput
                   placeholder="Nome completo"
-                  [formControl]="responsibleForm.controls['unity_aspect_responsible_name']"
+                  [formControl]="responsibleForm.controls['unit_aspect_responsible_name']"
                 >
               </mat-form-field>
             </div>
@@ -22,7 +22,7 @@
                 <input
                   matInput
                   placeholder="E-mail"
-                  [formControl]="responsibleForm.controls['unity_aspect_responsible_email']"
+                  [formControl]="responsibleForm.controls['unit_aspect_responsible_email']"
                 >
               </mat-form-field>
             </div>
@@ -85,13 +85,13 @@
 
             <ngx-datatable-column name="NOME" [flexGrow]="0" >
               <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row['unity_aspect_responsible_name'] }}
+                {{ row['unit_aspect_responsible_name'] }}
               </ng-template>
             </ngx-datatable-column>
 
             <ngx-datatable-column name="EMAIL" [flexGrow]="0" >
               <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row['unity_aspect_responsible_email'] }}
+                {{ row['unit_aspect_responsible_email'] }}
               </ng-template>
             </ngx-datatable-column>
 

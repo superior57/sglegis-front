@@ -47,16 +47,16 @@ export class UnitiesResponsibleFormComponent implements OnInit {
 
   prepareScreen(record) {    
     this.responsibleForm = new FormGroup({
-      unity_aspect_responsible_name: new FormControl('', [Validators.required]),
-      unity_aspect_responsible_email: new FormControl('', [Validators.required, Validators.email]),
+      unit_aspect_responsible_name: new FormControl('', [Validators.required]),
+      unit_aspect_responsible_email: new FormControl('', [Validators.required, Validators.email]),
     });
 
-    this.getAreasWithAspects(record.customer_unity_id);
-    this.getResponsiblesAspects(record.customer_unity_id);
+    this.getAreasWithAspects(record.customer_unit_id);
+    this.getResponsiblesAspects(record.customer_unit_id);
   }
 
-  getAreasWithAspects(unity_id) {
-    this.crudService.GetParams(undefined, `/customerunity/${unity_id||"0"}/aspectsonly`).subscribe(res => {
+  getAreasWithAspects(unit_id) {
+    this.crudService.GetParams(undefined, `/customerunit/${unit_id||"0"}/aspectsonly`).subscribe(res => {
       if (res.status == 200) {
         this.areasWithAspects = [];
         this.areasWithAspects = res.body;
@@ -64,8 +64,8 @@ export class UnitiesResponsibleFormComponent implements OnInit {
     });
   }
 
-  getResponsiblesAspects(unity_id) {
-    this.crudService.GetParams(undefined, `/customerunity/${unity_id || 0}/responsibles`).subscribe(res => {
+  getResponsiblesAspects(unit_id) {
+    this.crudService.GetParams(undefined, `/customerunit/${unit_id || 0}/responsibles`).subscribe(res => {
       if (res.status == 200) {
         this.responsibles = [];
         this.responsibles = res.body.map(responsible => {
@@ -92,7 +92,7 @@ export class UnitiesResponsibleFormComponent implements OnInit {
   addResponsible() {
     let newResponsible = this.responsibleForm.value;    
     this.responsibles = [...this.responsibles, {
-      unity_aspect_responsible_id: this.responsibles.length + 1,
+      unit_aspect_responsible_id: this.responsibles.length + 1,
       ...newResponsible,
       aspects: [
         ...this.selectedAspects
@@ -106,11 +106,11 @@ export class UnitiesResponsibleFormComponent implements OnInit {
   }
 
   removeResponsible(info: any) {
-    // this.confirm.confirm("Delete - Responsible", "Are you sure to delete a Responsible: " + info.unity_aspect_responsible_name).subscribe(res => {
+    // this.confirm.confirm("Delete - Responsible", "Are you sure to delete a Responsible: " + info.unit_aspect_responsible_name).subscribe(res => {
       // if (res === true) {
-        this.responsibles = this.responsibles.filter(res => res.unity_aspect_responsible_id !== info.unity_aspect_responsible_id);
+        this.responsibles = this.responsibles.filter(res => res.unit_aspect_responsible_id !== info.unit_aspect_responsible_id);
         if (!info.isNew) {
-          this.deletedResponsibles.push(info.unity_aspect_responsible_id);
+          this.deletedResponsibles.push(info.unit_aspect_responsible_id);
         }
     //   }
     // })
@@ -132,7 +132,7 @@ export class UnitiesResponsibleFormComponent implements OnInit {
   save() {
     this.loader.open();
     try {
-      this.saveResponsible(this.data.payload.customer_unity_id).then(async () => {
+      this.saveResponsible(this.data.payload.customer_unit_id).then(async () => {
         await this.deleteResponsibles();
         this.loader.close();
         this.snackBar.open("Recorded Responsibles data successfully", "", { duration: 3000 });
@@ -146,27 +146,27 @@ export class UnitiesResponsibleFormComponent implements OnInit {
 
   async deleteResponsibles() {
     for (let i = 0; i < this.deletedResponsibles.length; i ++) {
-      await this.crudService.DeleteParams(this.deletedResponsibles[i], '/customerunity/responsibles').toPromise();
+      await this.crudService.DeleteParams(this.deletedResponsibles[i], '/customerunit/responsibles').toPromise();
     }
   }
 
-  async saveResponsible(customer_unity_id) {
+  async saveResponsible(customer_unit_id) {
     for (let i = 0; i < this.responsibles.length; i ++) {
       if (this.responsibles[i].isNew) {
         const newResponsible = {
-          customer_unity_id,
-          unity_aspect_responsible_name: this.responsibles[i].unity_aspect_responsible_name,
-          unity_aspect_responsible_email: this.responsibles[i].unity_aspect_responsible_email
+          customer_unit_id,
+          unit_aspect_responsible_name: this.responsibles[i].unit_aspect_responsible_name,
+          unit_aspect_responsible_email: this.responsibles[i].unit_aspect_responsible_email
         } 
-        const resResponsible = await this.crudService.Save(newResponsible, true, `/customerunity/responsibles`, null).toPromise();
-        const { unity_aspect_responsible_id } = resResponsible.body;
+        const resResponsible = await this.crudService.Save(newResponsible, true, `/customerunit/responsibles`, null).toPromise();
+        const { unit_aspect_responsible_id } = resResponsible.body;
         
         for (let j = 0; j < this.responsibles[i].aspects.length; j ++) {
           const newResAspect = {
             area_aspect_id: this.responsibles[i].aspects[j].area_aspect_id,
-            unity_aspect_responsible_id
+            unit_aspect_responsible_id
           }
-          await this.crudService.Save(newResAspect, true, '/customerunity/responsibleaspects', null).toPromise();
+          await this.crudService.Save(newResAspect, true, '/customerunit/responsibleaspects', null).toPromise();
         }
       }
     }
