@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "agenda": { 
+    "sglegis": { 
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -66,19 +66,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "agenda:build",
+            "browserTarget": "sglegis:build",
             "port": 3001
           },
           "configurations": {
             "production": {
-              "browserTarget": "agenda:build:production"
+              "browserTarget": "sglegis:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "agenda:build"
+            "browserTarget": "sglegis:build"
           }
         },
         "test": {
@@ -128,7 +128,7 @@
         }
       }
     },
-    "agenda-e2e": {
+    "sglegis-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -137,7 +137,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "agenda:serve"
+            "devServerTarget": "sglegis:serve"
           }
         },
         "lint": {
@@ -152,7 +152,7 @@
       }
     }
   },
-  "defaultProject": "agenda",
+  "defaultProject": "sglegis",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

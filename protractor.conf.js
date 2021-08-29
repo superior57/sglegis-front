@@ -12,7 +12,7 @@ exports.config = {
     'browserName': 'chrome'
   },
   directConnect: true,
-  baseUrl: 'https://sglegis.200.systems/api/v1',
+  baseUrl: 'https://sglegis-api.200.systems/api/v1',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,

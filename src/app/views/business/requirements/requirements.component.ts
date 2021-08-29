@@ -162,7 +162,7 @@ export class RequirementsComponent implements OnInit {
       data: { title: "", payload: { 
         ...registro,
         unit_id: registro.customer_unit_id,
-        item_area_aspect_id: registro.area_aspect_id,
+        item_area_aspect_id: registro.item_area_aspect_id,
         user_id: this.currentUser.id,
       }, new: true }
     });

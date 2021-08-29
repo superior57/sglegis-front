@@ -91,9 +91,16 @@
   </div>
 
   <div style="margin-top: 10px;">
-    <ngx-datatable class="material striped" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
-      [rowHeight]="'auto'" [limit]="10" [rows]="Linhas" [messages]="{emptyMessage: 'Nenhuma informação encontrada'}"
-      [scrollbarH]="true" #myTable>
+    <ngx-datatable class="material striped" 
+      [columnMode]="'force'" 
+      [headerHeight]="50" 
+      [footerHeight]="50"
+      [rowHeight]="'auto'" 
+      [limit]="100" 
+      [rows]="Linhas" 
+      [messages]="{emptyMessage: 'Nenhuma informação encontrada'}"
+      [scrollbarH]="true"
+       #myTable>
 
       <!-- Row Detail Template -->
       <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow>
