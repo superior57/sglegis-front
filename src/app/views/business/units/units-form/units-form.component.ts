@@ -12,11 +12,11 @@ import { CustomersFormsComponent } from '../../customers/customers-forms/custome
 import { UsersFormComponent } from '../../users/users-form/users-form.component';
 
 @Component({
-  selector: 'app-unities-form',
-  templateUrl: './unities-form.component.html',
-  styleUrls: ['./unities-form.component.css']
+  selector: 'app-units-form',
+  templateUrl: './units-form.component.html',
+  styleUrls: ['./units-form.component.css']
 })
-export class UnitiesFormComponent implements OnInit {
+export class unitsFormComponent implements OnInit {
   public unitForm: FormGroup;
   customers_groups = [];
   customers = [];

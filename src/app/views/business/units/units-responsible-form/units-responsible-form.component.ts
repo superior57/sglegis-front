@@ -9,11 +9,11 @@ import { AppLoaderService } from 'app/services/dialogs/app-loader/app-loader.ser
 import { CRUDService } from 'app/services/negocio/CRUDService/CRUDService';
 
 @Component({
-  selector: 'app-unities-responsible-form',
-  templateUrl: './unities-responsible-form.component.html',
-  styleUrls: ['./unities-responsible-form.component.css']
+  selector: 'app-units-responsible-form',
+  templateUrl: './units-responsible-form.component.html',
+  styleUrls: ['./units-responsible-form.component.css']
 })
-export class UnitiesResponsibleFormComponent implements OnInit {
+export class unitsResponsibleFormComponent implements OnInit {
   responsibleForm: FormGroup;
   selectedAspects = [];
   aspectInvalid = true;
@@ -28,7 +28,7 @@ export class UnitiesResponsibleFormComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialogRef: MatDialogRef<UnitiesResponsibleFormComponent>,
+    public dialogRef: MatDialogRef<unitsResponsibleFormComponent>,
     private loader: AppLoaderService,
     private crudService: CRUDService,
     private snackBar: MatSnackBar,

@@ -11,7 +11,7 @@ import { CustomersComponent } from './customers/customers.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { HomeComponent } from './home/home.component';
 import { RequirementsComponent } from './requirements/requirements.component';
-import { UnitiesComponent } from './unities/unities.component';
+import { unitsComponent } from './units/units.component';
 import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [  
@@ -48,7 +48,7 @@ const routes: Routes = [
     path: '',
     children: [{
       path: 'unidades',
-      component: UnitiesComponent,
+      component: unitsComponent,
       data: { title: 'Unidades', breadcrumb: 'Unidades', profiles: [profile.gestor] }
     }]
   },

@@ -6,15 +6,15 @@ import { dialog } from 'app/models/size/size';
 import { AuthGuard } from 'app/services/auth/auth.guard';
 import { AppLoaderService } from 'app/services/dialogs/app-loader/app-loader.service';
 import { CRUDService } from 'app/services/negocio/CRUDService/CRUDService';
-import { UnitiesFormComponent } from './unities-form/unities-form.component';
-import { UnitiesResponsibleFormComponent } from './unities-responsible-form/unities-responsible-form.component';
+import { unitsFormComponent } from './units-form/units-form.component';
+import { unitsResponsibleFormComponent } from './units-responsible-form/units-responsible-form.component';
 
 @Component({
-  selector: 'app-unities',
-  templateUrl: './unities.component.html',
-  styleUrls: ['./unities.component.css']
+  selector: 'app-units',
+  templateUrl: './units.component.html',
+  styleUrls: ['./units.component.css']
 })
-export class UnitiesComponent implements OnInit {
+export class unitsComponent implements OnInit {
   lastSearch: any;
   rows = [];
   
@@ -86,7 +86,7 @@ export class UnitiesComponent implements OnInit {
 
   prepareScreen() {
     this.currentUser = this.auth.getUser();
-    this.getUnities(undefined);
+    this.getunits(undefined);
     
   }
 
@@ -94,7 +94,7 @@ export class UnitiesComponent implements OnInit {
     let text;     
     text = (newRercord) ? "Nova Unidade" : "Editar Unidade: " + info.customer_id;    
     
-    let dialogRef: MatDialogRef<any> = this.dialog.open(UnitiesFormComponent, {
+    let dialogRef: MatDialogRef<any> = this.dialog.open(unitsFormComponent, {
       width: '900px',
       disableClose: true,
       data: { title: text, payload: info, new: newRercord }
@@ -102,12 +102,12 @@ export class UnitiesComponent implements OnInit {
 
     dialogRef.afterClosed()
     .subscribe(res => {      
-      this.getUnities(this.lastSearch);
+      this.getunits(this.lastSearch);
       return;
     });
   }
   
-  getUnities(parameter: any) {
+  getunits(parameter: any) {
     this.lastSearch = parameter;
     this.crud.GetParams(this.lastSearch, "/customerunit").subscribe(res => {
       this.rows = [];
@@ -116,7 +116,7 @@ export class UnitiesComponent implements OnInit {
   }
 
   openResponsibleForm(info: any = {}) {
-    let dialogRef: MatDialogRef<any> = this.dialog.open(UnitiesResponsibleFormComponent, {
+    let dialogRef: MatDialogRef<any> = this.dialog.open(unitsResponsibleFormComponent, {
       width: dialog.medium,
       disableClose: true,
       data: { title: "Responsible per Unit", payload: info }
