@@ -5,7 +5,6 @@ import { CampoBusca } from 'app/models/base/negocio/CampoBusca';
 import { AuthGuard } from 'app/services/auth/auth.guard';
 import { AppLoaderService } from 'app/services/dialogs/app-loader/app-loader.service';
 import { CRUDService } from 'app/services/negocio/CRUDService/CRUDService';
-import { AreasFormComponent } from '../areas/areas-form/areas-form.component';
 import { AspectsFormComponent } from './aspects-form/aspects-form.component';
 
 @Component({
@@ -25,26 +24,26 @@ export class AspectsComponent implements OnInit {
       Largura: 50
     },
     {
-      Propriedade: 'area_aspect_name',
-      Titulo: 'Nome do Aspecto',
+      Propriedade: 'area_name',
+      Titulo: 'Sistema de Gestão',
       Visivel: true,
       Largura:150
     },
     {
-      Propriedade: 'area_name',
-      Titulo: 'Sistema de Gestão',
+      Propriedade: 'area_aspect_name',
+      Titulo: 'Nome do Aspecto',
       Visivel: true,
       Largura:150
     }
   ]
 
   configSearch = [
-    new CampoBusca("filter", "Grupo", 50, "", "string", null, null, null)
+    new CampoBusca("area_name", "Sist.Gestão", 50, "", "string", null, null, null),
+    new CampoBusca("area_aspect_name", "Aspecto", 50, "", "string", null, null, null),
   ];
 
-  profile = profile;
   currentUser: any = {};
-
+  profile = profile;
 
   constructor(
     private crud: CRUDService,
@@ -86,6 +85,10 @@ export class AspectsComponent implements OnInit {
       this.rows = [];
       this.rows = res.body;
     })
+  }
+
+  getAreas() {
+    return this.crud.GetParams(undefined, "/area").toPromise().then(res => res.body);
   }
 
   ngOnInit() {

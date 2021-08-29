@@ -59,7 +59,6 @@ export class RequirementsComponent implements OnInit {
     if (type === 'customer_group_id') {
       this.getCustomers(value);      
     }
-        
   }
 
   async setConfigSearch() {    
