@@ -26,7 +26,7 @@ export class RequirementsComponent implements OnInit {
   columns = [
     { Propriedade: 'area_name', Titulo: 'Sis.Gestão', Visivel: true, Largura:200 },
     { Propriedade: 'area_aspect_name', Titulo: 'Aspecto', Visivel: true, Largura:150 },
-    // { Propriedade: 'customer_unity_name', Titulo: 'Unity', Visivel: true, Largura:200 },
+    // { Propriedade: 'customer_unit_name', Titulo: 'unit', Visivel: true, Largura:200 },
     // { Propriedade: 'area_name', Titulo: 'Area', Visivel: true, Largura:100 },
     { Propriedade: 'document_item_subject', Titulo: 'Assunto', Visivel: true, Largura:100 },
     { Propriedade: 'document_scope_description', Titulo: 'Âmbito', Visivel: true, Largura:100 },
@@ -34,7 +34,7 @@ export class RequirementsComponent implements OnInit {
     { Propriedade: 'document_item_number', Titulo: 'Item', Visivel: true, Largura:100 },
     { Propriedade: 'document_date_status', Titulo: 'Data/Status', Visivel: true, Largura:200},    
     // { Propriedade: 'customer_business_name', Titulo: 'Cliente', Visivel: true, Largura: 150 },
-    // { Propriedade: 'customer_unity_name', Titulo: 'Unidade', Visivel: true, Largura: 150 },
+    // { Propriedade: 'customer_unit_name', Titulo: 'Unidade', Visivel: true, Largura: 150 },
   ]
 
   currentUser: any;
@@ -71,7 +71,7 @@ export class RequirementsComponent implements OnInit {
     let aux = [      
       new CampoBusca("customer_group_id", "Grupo", 50, "", "LIST", groups, "customer_group_name", "customer_group_id"),
       new CampoBusca("customer_id", "Matriz", 50, "", "LIST", [], "customer_business_name", "customer_id"),
-      new CampoBusca("customer_unity_name", "Unidade", 50, "", "string", null, null, null),
+      new CampoBusca("customer_unit_name", "Unidade", 50, "", "string", null, null, null),
       new CampoBusca("area_name", "Sist.Gestão", 50, "", "LIST", areas, "area_name", "area_id"),
       new CampoBusca("document_scope_id", "Âmbito", 50, "", "LIST", scopes, "document_scope_description", "document_scope_id"),
       new CampoBusca("document_item_number", "Número", 50, "", "string", null, null, null),
@@ -162,7 +162,7 @@ export class RequirementsComponent implements OnInit {
       disableClose: true,
       data: { title: "", payload: { 
         ...registro,
-        unit_id: registro.customer_unity_id,
+        unit_id: registro.customer_unit_id,
         item_area_aspect_id: registro.area_aspect_id,
         user_id: this.currentUser.id,
       }, new: true }

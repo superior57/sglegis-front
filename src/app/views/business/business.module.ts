@@ -42,8 +42,8 @@ import { CustomerGroupsComponent } from './customer-groups/customer-groups.compo
 import { CustomerGroupFormComponent } from './customer-groups/customer-group-form/customer-group-form.component';
 import { CustomersComponent } from './customers/customers.component';
 import { CustomersFormsComponent } from './customers/customers-forms/customers-forms.component';
-import { UnitiesComponent } from './unities/unities.component';
-import { UnitiesFormComponent } from './unities/unities-form/unities-form.component';
+import { unitsComponent } from './units/units.component';
+import { unitsFormComponent } from './units/units-form/units-form.component';
 import { AreasComponent } from './areas/areas.component';
 import { AreasFormComponent } from './areas/areas-form/areas-form.component';
 import { AspectsComponent } from './aspects/aspects.component';
@@ -58,7 +58,7 @@ import { UsersComponent } from './users/users.component';
 import { UsersFormComponent } from './users/users-form/users-form.component';
 import { FileFieldComponent } from "./../../components/common/file-field/file-field.component";
 import { DocumentsAttachementFormComponent } from './documents/documents-attachement-form/documents-attachement-form.component';
-import { UnitiesResponsibleFormComponent } from './unities/unities-responsible-form/unities-responsible-form.component';
+import { unitsResponsibleFormComponent } from './units/units-responsible-form/units-responsible-form.component';
 import { ActionPlanFormComponent } from './requirements/action-plan-form/action-plan-form.component';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
@@ -112,20 +112,20 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     GradeComponent,
     CustomerGroupsComponent, CustomerGroupFormComponent,
     CustomersComponent, CustomersFormsComponent,
-    UnitiesComponent,
-    UnitiesFormComponent,
+    unitsComponent,
+    unitsFormComponent,
     AreasComponent,
     AreasFormComponent, AspectsComponent, AspectsFormComponent, DocumentsComponent, DocumentsFormComponent,
     HomeComponent,
     DocumentItemComponent,
     RequirementsComponent,
     RequirementsFormComponent,
-    UsersComponent, UsersFormComponent, FileFieldComponent, DocumentsAttachementFormComponent, UnitiesResponsibleFormComponent, ActionPlanFormComponent
+    UsersComponent, UsersFormComponent, FileFieldComponent, DocumentsAttachementFormComponent, unitsResponsibleFormComponent, ActionPlanFormComponent
   ],
   exports: [MatAutocompleteModule],
   entryComponents: [CustomerGroupFormComponent,
-    CustomersFormsComponent, UnitiesFormComponent, AreasFormComponent, AspectsFormComponent, DocumentsFormComponent, DocumentsAttachementFormComponent,
-    DocumentItemComponent, RequirementsFormComponent, UsersFormComponent, UnitiesResponsibleFormComponent, ActionPlanFormComponent
+    CustomersFormsComponent, unitsFormComponent, AreasFormComponent, AspectsFormComponent, DocumentsFormComponent, DocumentsAttachementFormComponent,
+    DocumentItemComponent, RequirementsFormComponent, UsersFormComponent, unitsResponsibleFormComponent, ActionPlanFormComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }]

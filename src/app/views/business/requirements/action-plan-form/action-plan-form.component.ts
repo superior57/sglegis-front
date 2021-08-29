@@ -68,7 +68,7 @@ export class ActionPlanFormComponent implements OnInit {
           ...this.activities
         ],
         activityChanges: {
-          unity_name: this.actionPlan.customer_unity_name,
+          unit_name: this.actionPlan.customer_unit_name,
           aspect_name: this.actionPlan.area_aspect_name,
           customer_name,
           actionplan_items: [...this.activityChanges.map(a => ({ ...a, deadline: dateFormat(a.deadline, "MM/DD/yyyy") }))]

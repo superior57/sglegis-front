@@ -12,12 +12,12 @@ import { CustomersFormsComponent } from '../../customers/customers-forms/custome
 import { UsersFormComponent } from '../../users/users-form/users-form.component';
 
 @Component({
-  selector: 'app-unities-form',
-  templateUrl: './unities-form.component.html',
-  styleUrls: ['./unities-form.component.css']
+  selector: 'app-units-form',
+  templateUrl: './units-form.component.html',
+  styleUrls: ['./units-form.component.css']
 })
-export class UnitiesFormComponent implements OnInit {
-  public unityForm: FormGroup;
+export class unitsFormComponent implements OnInit {
+  public unitForm: FormGroup;
   customers_groups = [];
   customers = [];
   states = [];
@@ -41,21 +41,21 @@ export class UnitiesFormComponent implements OnInit {
   ) { }
 
   prepareScreen(record) {
-    this.unityForm = new FormGroup({
-      customer_unity_id: new FormControl(record.customer_unity_id),
-      customer_unity_x: new FormControl(record.customer_unity_id),
-      customer_unity_cnpj: new FormControl(record.customer_unity_cnpj, []),
-      customer_unity_name: new FormControl(record.customer_unity_name, [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),
-      customer_unity_address: new FormControl(record.customer_unity_address, []),
-      customer_unity_city_id: new FormControl(record.customer_unity_city_id, []),
-      customer_unity_uf_id: new FormControl(record.customer_unity_uf_id, []),
-      customer_unity_cep: new FormControl(record.customer_unity_cep, []),
+    this.unitForm = new FormGroup({
+      customer_unit_id: new FormControl(record.customer_unit_id),
+      customer_unit_x: new FormControl(record.customer_unit_id),
+      customer_unit_cnpj: new FormControl(record.customer_unit_cnpj, []),
+      customer_unit_name: new FormControl(record.customer_unit_name, [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),
+      customer_unit_address: new FormControl(record.customer_unit_address, []),
+      customer_unit_city_id: new FormControl(record.customer_unit_city_id, []),
+      customer_unit_uf_id: new FormControl(record.customer_unit_uf_id, []),
+      customer_unit_cep: new FormControl(record.customer_unit_cep, []),
       customer_group_id: new FormControl(this.currentUser.role === roles.admin ? record.customer_group_id : this.currentUser.customer_group_id, [Validators.required]),
       customer_id: new FormControl(record.customer_id, [Validators.required]),
-      unity_contact_name: new FormControl(record.unity_contact_name, [Validators.required]),
-      unity_contact_email: new FormControl(record.unity_contact_email, [Validators.required, Validators.email]),
-      unity_contact_phone: new FormControl(record.unity_contact_phone, [Validators.required]),
-      unity_contact_observation: new FormControl(record.unity_contact_observation)
+      unit_contact_name: new FormControl(record.unit_contact_name, [Validators.required]),
+      unit_contact_email: new FormControl(record.unit_contact_email, [Validators.required, Validators.email]),
+      unit_contact_phone: new FormControl(record.unit_contact_phone, [Validators.required]),
+      unit_contact_observation: new FormControl(record.unit_contact_observation)
     });
     this.getGroups();
     this.getStates();
@@ -64,21 +64,21 @@ export class UnitiesFormComponent implements OnInit {
       this.getCustomers(this.currentUser.customer_group_id);
     }
 
-    this.unityForm.controls.customer_group_id.valueChanges.subscribe(res => {
+    this.unitForm.controls.customer_group_id.valueChanges.subscribe(res => {
       this.getCustomers(res);
     });
     
     if (!this.data.new) {      
-      this.getCustomers(this.unityForm.controls.customer_group_id.value);
+      this.getCustomers(this.unitForm.controls.customer_group_id.value);
       this.getCep();
       this.getCities();
     }
 
-    this.getAreasWithAspects(record.customer_unity_id);
+    this.getAreasWithAspects(record.customer_unit_id);
   }
 
-  getAreasWithAspects(unity_id) {
-    this.crudService.GetParams(undefined, `/customerunity/${unity_id||"0"}/aspects`).subscribe(asps => {
+  getAreasWithAspects(unit_id) {
+    this.crudService.GetParams(undefined, `/customerunit/${unit_id||"0"}/aspects`).subscribe(asps => {
       if (asps.status == 200) {
         this.areasWithAspects = [];
         this.areasWithAspects = asps.body;
@@ -129,17 +129,17 @@ export class UnitiesFormComponent implements OnInit {
       });
   }
 
-  deleteUnity() {
+  deleteunit() {
 
   }
 
-  saveUnity() {
-    let form = this.unityForm.value;
+  saveunit() {
+    let form = this.unitForm.value;
     this.loader.open();
-    this.crudService.Save(form, this.data.new, "/customerunity", form.customer_unity_id).subscribe(res => {
+    this.crudService.Save(form, this.data.new, "/customerunit", form.customer_unit_id).subscribe(res => {
       if (res.status == 200) {
         this.loader.close();
-        this.saveAreasAspects(res.body.customer_unity_id || form.customer_unity_id).then(r => {
+        this.saveAreasAspects(res.body.customer_unit_id || form.customer_unit_id).then(r => {
           this.snackBar.open("Registro gravado com sucesso", "", { duration: 3000 });
           this.dialogRef.close('OK');
         })
@@ -152,7 +152,7 @@ export class UnitiesFormComponent implements OnInit {
     });
   }
 
-  async saveAreasAspects(unity_id) {
+  async saveAreasAspects(unit_id) {
     for (let i = 0; i < this.areasWithAspects.length; i++) {
       for (let j = 0; j < this.areasWithAspects[i].aspects.length; j++) {
         if (this.areasWithAspects[i].aspects[j].checked != this.areasWithAspects[i].aspects[j].previous) {
@@ -160,11 +160,11 @@ export class UnitiesFormComponent implements OnInit {
             let o: any = new Object();
             o.area_id = this.areasWithAspects[i].area_id;
             o.area_aspect_id = this.areasWithAspects[i].aspects[j].area_aspect_id;
-            o.customer_unity_id = unity_id;
-            let resp = await this.crudService.Save(o, true, `/customerunity/${unity_id}/aspects`, "0").toPromise();
+            o.customer_unit_id = unit_id;
+            let resp = await this.crudService.Save(o, true, `/customerunit/${unit_id}/aspects`, "0").toPromise();
             console.log("res ins:" + resp);
           } else {
-            let resp = await this.crudService.DeleteParams(this.areasWithAspects[i].aspects[j].unity_area_aspect_id, `/customerunity/${unity_id}/aspects`).toPromise();
+            let resp = await this.crudService.DeleteParams(this.areasWithAspects[i].aspects[j].unit_area_aspect_id, `/customerunit/${unit_id}/aspects`).toPromise();
             console.log("res del:"+ resp);
           }
         }
@@ -174,16 +174,16 @@ export class UnitiesFormComponent implements OnInit {
   }
 
   getCep() {    
-    let cep = this.unityForm.controls.customer_unity_cep.value;
+    let cep = this.unitForm.controls.customer_unit_cep.value;
     //this.loader.open();
     this.crudService.GetParams(undefined, "/cep/" + cep).subscribe(res => {
       //this.loader.close();
 
       if (res.status == 200 && res.body.length > 0) {
         //[{"cep_id":533858,"city_id":9640,"state_id":26,"type":"Rua","street_name":"Rua Bahia (Vl S Pedro)","district_name":"Montanh├úo","cep":9784200,"createdAt":"2021-05-04T01:20:21.000Z","updatedAt":"2021-05-04T01:20:21.000Z"}]
-        this.unityForm.controls.customer_unity_address.setValue(res.body[0].street_name);
+        this.unitForm.controls.customer_unit_address.setValue(res.body[0].street_name);
         
-        this.unityForm.controls.customer_unity_uf_id.setValue(res.body[0].state_id);
+        this.unitForm.controls.customer_unit_uf_id.setValue(res.body[0].state_id);
         let p: any = new Object();
         p.state_id = res.body[0].state_id;
         p.orderby = "city_name";
@@ -193,7 +193,7 @@ export class UnitiesFormComponent implements OnInit {
             this.cities = [];
             this.cities = c.body;
             
-            this.unityForm.controls.customer_unity_city_id.setValue(res.body[0].city_id);
+            this.unitForm.controls.customer_unit_city_id.setValue(res.body[0].city_id);
           }
         });
       }
@@ -254,7 +254,7 @@ export class UnitiesFormComponent implements OnInit {
   }
 
   getCities() {
-    const state_id = this.unityForm.controls.customer_unity_uf_id.value;    
+    const state_id = this.unitForm.controls.customer_unit_uf_id.value;    
     let p: any = new Object();
     p.state_id = state_id;
     p.orderby = "city_name";
