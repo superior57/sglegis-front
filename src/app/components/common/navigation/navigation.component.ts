@@ -53,11 +53,11 @@ export class NavigationComponent {
         l.Ativo = "S";
         l.Disable = 0;
         l.Icon = "settings";
-        l.Name = "Auditoria";
+        l.Name = "Legislação Aplicável";
         l.Ordem = 1;
         l.State = "";
         l.Type = "dropDown";
-        l.Tooltip = "Auditoria";
+        l.Tooltip = "Legislação Aplicável";
         x.push(l);        
         
 
@@ -102,11 +102,11 @@ export class NavigationComponent {
         l.Ativo = "S";
         l.Disable = 0;
         l.Icon = "settings";
-        l.Name = "Auditoria";
+        l.Name = "Legislação Aplicável";
         l.Ordem = 1;
         l.State = "";
         l.Type = "dropDown";
-        l.Tooltip = "Auditoria";
+        l.Tooltip = "Legislação Aplicável";
         x.push(l);        
         
 

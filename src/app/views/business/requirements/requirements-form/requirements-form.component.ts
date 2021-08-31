@@ -18,21 +18,8 @@ export class RequirementsFormComponent implements OnInit {
   public audit: FormGroup;
   public historicals: any[] = [];
   public featuredHistory = null;
-
-  public conforms = [
-    { "id": 1, "desc": "A VERIFICAR" },
-    { "id": 2, "desc": "SIM" },
-    { "id": 3, "desc": "NÃO" },
-    { "id": 3, "desc": "FUTURO" },
-    { "id": 3, "desc": "PARCIAL" },
-    { "id": 3, "desc": "A VERIFICAR" }
-  ]
-
-  public pratics = [
-    { "id": 1, "desc": "A VERIFICAR" },
-    { "id": 2, "desc": "SIM" },
-    { "id": 3, "desc": "NÃO" },
-  ]
+  public conforms = []
+  public pratics = []
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   public dialogRef: MatDialogRef<CustomersFormsComponent>,
@@ -43,17 +30,25 @@ export class RequirementsFormComponent implements OnInit {
   public dialog: MatDialog) {  }
 
   ngOnInit() {
+    this.loadDropdowns();
+
     this.prepareScreen(this.data.payload);    
   }
 
+  async loadDropdowns() {
+    this.conforms = await this.loadConformity();
+    this.pratics = await this.loadPraticalOrder();
+  };
+
   prepareScreen(record: any) {
+    
     this.audit = new FormGroup({
       audit_id: new FormControl(null),
       audit_practical_order: new FormControl('', [Validators.required]),
       audit_conformity: new FormControl('', [Validators.required]),
       audit_evidnece_compliance: new FormControl('', [Validators.required]),
       audit_control_action: new FormControl('', [Validators.required])
-    })
+    });
     this.getHistorical(record).then((res: any) => {
       if (res) {
         this.featuredHistory = {
@@ -69,8 +64,8 @@ export class RequirementsFormComponent implements OnInit {
           audit_evidnece_compliance: new FormControl(this.featuredHistory.audit_evidnece_compliance || '', [Validators.required]),
           audit_control_action: new FormControl(this.featuredHistory.audit_control_action || '', [Validators.required])
         })
-      }      
-    })    
+      }
+    });
     this.initItems(record);    
   }
 
@@ -192,6 +187,14 @@ export class RequirementsFormComponent implements OnInit {
 
   getConformityName(id) {
     return this.conforms.find(c => c.id === id).desc;
+  }
+
+  loadPraticalOrder() {
+    return this.crudService.GetParams(undefined, "/praticalorder").toPromise().then(res => res.body);
+  }
+
+  loadConformity() {
+    return this.crudService.GetParams(undefined, "/conformity").toPromise().then(res => res.body);
   }
 
 }
