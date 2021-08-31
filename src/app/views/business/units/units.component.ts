@@ -20,20 +20,8 @@ export class unitsComponent implements OnInit {
   
   columns = [
     {
-      Propriedade: 'customer_unit_id',
-      Titulo: 'Id da Unidade',
-      Visivel: false,
-      Largura: 30
-    },
-    {
-      Propriedade: 'customer_unit_cnpj',
-      Titulo: 'CNPJ',
-      Visivel: true,
-      Largura:50
-    },
-    {
-      Propriedade: 'customer_group_name',
-      Titulo: 'Grupo',
+      Propriedade: 'customer_business_name',
+      Titulo: 'Matriz',
       Visivel: true,
       Largura:70
     },    
@@ -92,7 +80,7 @@ export class unitsComponent implements OnInit {
 
   openForm(info: any = {}, newRercord: Boolean) {
     let text;     
-    text = (newRercord) ? "Nova Unidade" : "Editar Unidade: " + info.customer_id;    
+    text = (newRercord) ? "Nova Unidade" : "Editar Unidade: " + info.customer_unit_name;    
     
     let dialogRef: MatDialogRef<any> = this.dialog.open(unitsFormComponent, {
       width: '900px',
@@ -119,7 +107,7 @@ export class unitsComponent implements OnInit {
     let dialogRef: MatDialogRef<any> = this.dialog.open(unitsResponsibleFormComponent, {
       width: dialog.medium,
       disableClose: true,
-      data: { title: "Responsible per Unit", payload: info }
+      data: { title: "Responsáveis por Aspecto", payload: info }
     });
   }
 
