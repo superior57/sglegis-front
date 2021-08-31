@@ -17,12 +17,12 @@ export class AspectsComponent implements OnInit {
   rows = [];
   
   columns = [
-    {
-      Propriedade: 'area_aspect_id',
-      Titulo: 'Id do Aspecto',
-      Visivel: false,
-      Largura: 50
-    },
+    // {
+    //   Propriedade: 'area_aspect_id',
+    //   Titulo: 'Id do Aspecto',
+    //   Visivel: false,
+    //   Largura: 50
+    // },
     {
       Propriedade: 'area_name',
       Titulo: 'Sistema de Gestão',

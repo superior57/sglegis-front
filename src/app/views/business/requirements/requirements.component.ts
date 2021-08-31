@@ -24,11 +24,13 @@ export class RequirementsComponent implements OnInit {
   configSearch: any = [];
 
   columns = [
+    { Propriedade: 'customer_business_name', Titulo: 'Matriz', Visivel: true, Largura:200 },
+    { Propriedade: 'customer_unit_name', Titulo: 'Unidade', Visivel: true, Largura:200 },
     { Propriedade: 'area_name', Titulo: 'Sis.Gestão', Visivel: true, Largura:200 },
     { Propriedade: 'area_aspect_name', Titulo: 'Aspecto', Visivel: true, Largura:150 },
     // { Propriedade: 'customer_unit_name', Titulo: 'unit', Visivel: true, Largura:200 },
     // { Propriedade: 'area_name', Titulo: 'Area', Visivel: true, Largura:100 },
-    { Propriedade: 'document_item_subject', Titulo: 'Assunto', Visivel: true, Largura:100 },
+    // { Propriedade: 'document_item_subject', Titulo: 'Assunto', Visivel: true, Largura:100 },
     { Propriedade: 'document_scope_description', Titulo: 'Âmbito', Visivel: true, Largura:100 },
     { Propriedade: 'document_number', Titulo: 'Documento', Visivel: true, Largura:100 },
     { Propriedade: 'document_item_number', Titulo: 'Item', Visivel: true, Largura:100 },
@@ -119,7 +121,7 @@ export class RequirementsComponent implements OnInit {
           let date = moment(newRow.document_date);
           this.rows.push({
             ...newRow,
-            document_date_status: `${date.format('yyyy-MM-DD')} / ${newRow.status_description}`
+            document_date_status: `${date.format('DD/MM/yyyy')} - ${newRow.status_description}`
           });
         }
       });
