@@ -19,12 +19,6 @@ export class AreasComponent implements OnInit {
   
   columns = [
     {
-      Propriedade: 'area_id',
-      Titulo: 'Id do Sistema de Gestão',
-      Visivel: false,
-      Largura: 50
-    },
-    {
       Propriedade: 'area_name',
       Titulo: 'Sistema de Gestão',
       Visivel: true,
@@ -54,7 +48,7 @@ export class AreasComponent implements OnInit {
 
   openForm(info: any = {}, newRercord: Boolean) {
     let text;     
-    text = (newRercord) ? "Novo Sistema de Gestão" : "Editar Sistema de Gestão: " + info.area_id;    
+    text = (newRercord) ? "Novo Sistema de Gestão" : "Editar: " + info.area_name;    
     
     let dialogRef: MatDialogRef<any> = this.dialog.open(AreasFormComponent, {
       width: '720px',
