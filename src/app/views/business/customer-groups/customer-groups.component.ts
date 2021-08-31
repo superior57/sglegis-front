@@ -20,12 +20,6 @@ export class CustomerGroupsComponent implements OnInit {
   
   columns = [
     {
-      Propriedade: 'customer_group_id',
-      Titulo: 'Id do Grupo',
-      Visivel: false,
-      Largura: 50
-    },
-    {
       Propriedade: 'customer_group_name',
       Titulo: 'Nome do grupo',
       Visivel: true,
