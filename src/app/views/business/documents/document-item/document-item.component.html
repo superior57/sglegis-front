@@ -70,13 +70,13 @@
 
                 </mat-expansion-panel-header>
                 <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
-                  <div fxFlex="20" class="pr-1">
+                  <div fxFlex="50" class="pr-1">
                     <mat-checkbox color="primary" (change)="toggleAll(areaWithAspect, $event)">
-                      TODOS
+                      SELECIONAR TODOS
                     </mat-checkbox>
                   </div>
 
-                  <div fxFlex="20" class="pr-1" *ngFor="let aspect of areaWithAspect.aspects">
+                  <div fxFlex="50" class="pr-1" *ngFor="let aspect of areaWithAspect.aspects">
                     <mat-checkbox color="primary" [checked]="aspect.checked=='S'" (change)="toggle(aspect, $event)">
                       {{aspect.area_aspect_name}}
                     </mat-checkbox>

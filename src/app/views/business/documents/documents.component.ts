@@ -19,18 +19,18 @@ export class DocumentsComponent implements OnInit  {
   rows = [];
   
   columns = [
+    // {
+    //   Propriedade: 'document_id',
+    //   Titulo: 'Id. Documento',
+    //   Visivel: false,
+    //   Largura: 20
+    // },
     {
-      Propriedade: 'document_id',
-      Titulo: 'Id. Documento',
-      Visivel: false,
-      Largura: 20
-    },
-    {
-      Propriedade: 'document_number',
-      Titulo: 'Número',
+      Propriedade: 'concat_type_number',
+      Titulo: 'Documento',
       Visivel: true,
-      Largura:50
-    },
+      Largura:100
+    },    
     {
       Propriedade: 'document_date',
       Titulo: 'Data',
@@ -39,13 +39,19 @@ export class DocumentsComponent implements OnInit  {
       Tipo: "DATA"
     },
     {
+      Propriedade: 'document_scope_description',
+      Titulo: 'Âmbito',
+      Visivel: true,
+      Largura:10
+    },
+    {
       Propriedade: 'document_summary',
       Titulo: 'Ementa',
       Visivel: true,
-      Largura:200
+      Largura: 300
     },
     {
-      Propriedade: 'document_status_id',
+      Propriedade: 'status_description',
       Titulo: 'Status',
       Visivel: true,
       Largura:10
