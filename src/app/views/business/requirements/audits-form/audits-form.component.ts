@@ -13,7 +13,7 @@ import { CustomersFormsComponent } from '../../customers/customers-forms/custome
   styleUrls: ['./audits-form.component.css']
 })
 export class AuditFormComponent implements OnInit {
-  item_area_aspect_id: any[];
+  document_items: any[];
   notify: Boolean = false;
   public audit: FormGroup;
   public historicals: any[] = [];
@@ -71,17 +71,18 @@ export class AuditFormComponent implements OnInit {
 
   initItems(record: any) {
     const documentItemIds = [];
-    this.item_area_aspect_id = [];
+    this.document_items = [];
     record.forEach(r => {      
-      if (!documentItemIds.includes(r.item_area_aspect_id)) {        
-        documentItemIds.push(r.item_area_aspect_id);
-        this.item_area_aspect_id.push(r);
+      if (!documentItemIds.includes(r.document_item_id)) {        
+        documentItemIds.push(r.document_item_id);
+        this.document_items.push(r);
       }
     });   
   }
 
   saveAudit() {
     const datas = this.data.payload;
+    const user = this.data.user;
     let audit = this.audit.value;
     this.loader.open();
     datas.forEach(d => {
@@ -89,9 +90,10 @@ export class AuditFormComponent implements OnInit {
         audit_id: d.audit_id,
         item_area_aspect_id: d.item_area_aspect_id,
         unit_id: d.customer_unit_id,
+        user_id: user.id,
         audit_items: {
           ...audit,
-          user_id: 1, //TODO: Pegar do contexto
+          user_id: user.id
         }
       };
 

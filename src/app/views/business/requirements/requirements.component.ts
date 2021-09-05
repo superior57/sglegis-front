@@ -24,9 +24,9 @@ export class RequirementsComponent implements OnInit {
   configSearch: any = [];
 
   columns = [
-    { Propriedade: 'customer_business_name', Titulo: 'Matriz', Visivel: true, Largura:200 },
-    { Propriedade: 'customer_unit_name', Titulo: 'Unidade', Visivel: true, Largura:200 },
-    { Propriedade: 'area_name', Titulo: 'Sis.Gestão', Visivel: true, Largura:200 },
+    { Propriedade: 'customer_business_name', Titulo: 'Matriz', Visivel: true, Largura:100 },
+    { Propriedade: 'customer_unit_name', Titulo: 'Unidade', Visivel: true, Largura:100 },
+    { Propriedade: 'area_name', Titulo: 'Sis.Gestão', Visivel: true, Largura:100 },
     { Propriedade: 'area_aspect_name', Titulo: 'Aspecto', Visivel: true, Largura:150 },
     // { Propriedade: 'customer_unit_name', Titulo: 'unit', Visivel: true, Largura:200 },
     // { Propriedade: 'area_name', Titulo: 'Area', Visivel: true, Largura:100 },
@@ -37,12 +37,16 @@ export class RequirementsComponent implements OnInit {
     { Propriedade: 'document_date_status', Titulo: 'Data/Status', Visivel: true, Largura:200},    
     // { Propriedade: 'customer_business_name', Titulo: 'Cliente', Visivel: true, Largura: 150 },
     // { Propriedade: 'customer_unit_name', Titulo: 'Unidade', Visivel: true, Largura: 150 },
+    { Propriedade: 'audit_conformity_description', Titulo: 'Conformidade', Visivel: true, Largura: 100 },
+    { Propriedade: 'audit_practical_order_description', Titulo: 'Ordem Prática', Visivel: true, Largura:100 },
   ]
 
   currentUser: any;
   roles = roles;
   selectedRows = [];
   syncInit = false;
+  conforms = []
+  pratics = []
 
   constructor(
     private crud: CRUDService,
@@ -55,6 +59,8 @@ export class RequirementsComponent implements OnInit {
   prepareScreen() {
     this.setConfigSearch();
     this.getDocuments(undefined);
+    this.loadConformity();
+    this.loadPraticalOrder();
   }
 
   onFilterValueChange(type: string, value: any) {
@@ -90,14 +96,15 @@ export class RequirementsComponent implements OnInit {
   }
 
 
-  openForm(info: any = {}, newRercord: Boolean) {   
-    let text;
-    text = (newRercord) ? "Novo Documento" : "Editar Documento: " + info.document_id;
+  openForm(info: any = {}) {   
 
     let dialogRef: MatDialogRef<any> = this.dialog.open(AuditFormComponent, {
       width: '900px',
       disableClose: true,
-      data: { title: text, payload: this.selectedRows, new: newRercord }
+      data: {
+        payload: this.selectedRows,
+        user: this.currentUser
+      }
     });
 
     dialogRef.afterClosed().subscribe(res => {             
@@ -121,7 +128,9 @@ export class RequirementsComponent implements OnInit {
           let date = moment(newRow.document_date);
           this.rows.push({
             ...newRow,
-            document_date_status: `${date.format('DD/MM/yyyy')} - ${newRow.status_description}`
+            document_date_status: `${date.format('DD/MM/yyyy')} - ${newRow.status_description}`,
+            audit_practical_order_description: this.getPraticName(newRow.audit_practical_order),
+            audit_conformity_description: this.getConformityName(newRow.audit_conformity),
           });
         }
       });
@@ -200,5 +209,25 @@ export class RequirementsComponent implements OnInit {
 
   getAreas() {
     return this.crud.GetParams(undefined, "/area").toPromise().then(res => res.body);
+  }
+
+  getPraticName(id) {
+    if (!id)
+      id = 1; //default "A VERIFICAR"
+    return this.pratics.find(p => p.id === id).desc;
+  }
+
+  getConformityName(id) {
+    if (!id)
+      id = 1; //default "A VERIFICAR"
+    return this.conforms.find(c => c.id === id).desc;
+  }
+
+  async loadPraticalOrder() {
+    this.pratics = await this.crud.GetParams(undefined, "/praticalorder").toPromise().then(res => res.body);
+  }
+
+  async loadConformity() {
+    this.conforms = await this.crud.GetParams(undefined, "/conformity").toPromise().then(res => res.body);
   }
 }

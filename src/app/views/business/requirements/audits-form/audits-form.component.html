@@ -46,12 +46,6 @@
         <fieldset disabled="false" >
           <legend>Total de itens: {{ document_items.length }}</legend>
           <p *ngFor="let document of document_items">{{ document.document_item_description }}</p>
-          <!-- <p>
-            A INSTALAÇÃO, A CONSTRUÇÃO OU A AMPLIAÇÃO, BEM COMO A OPERAÇÃO OU O FUNCIONAMENTO DAS FONTES DE POLUIÇÃO QUE
-            FOREM ENUMERADAS NO REGULAMENTO DESTA LEI, FICAM SUJEITOS À PRÉVIA AUTORIZAÇÃO DO ÓRGÃO ESTADUAL DE CONTROLE
-            DA POLUIÇÃO DO MEIO-AMBIENTE, MEDIANTE EXPEDIÇÃO, QUANDO FOR O CASO, DE LICENÇA AMBIENTAL PRÉVIA (LAP), E DE
-            LICENÇA AMBIENTAL DE INSTALAÇÃO (LAI) E/OU DE LICENÇA AMBIENTAL DE OPERAÇÃO (LAO).          
-          </p> -->
         </fieldset>
       </div>
 
@@ -75,6 +69,16 @@
           <ngx-datatable-column name="Ação de controle" [flexGrow]="0" [width]="">
             <ng-template let-row="row" ngx-datatable-cell-template>
               {{ row["audit_control_action"] }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Alterado em" [flexGrow]="0" [width]="">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row["updatedAt"] | date:'short' }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Usuário" [flexGrow]="0" [width]="">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{ row["user_name"] }}
             </ng-template>
           </ngx-datatable-column>
         </ngx-datatable>
