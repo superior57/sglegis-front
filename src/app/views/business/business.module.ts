@@ -53,7 +53,7 @@ import { DocumentsFormComponent } from './documents/documents-form/documents-for
 import { HomeComponent } from './home/home.component';
 import { DocumentItemComponent } from './documents/document-item/document-item.component';
 import { RequirementsComponent } from './requirements/requirements.component';
-import { RequirementsFormComponent } from './requirements/requirements-form/requirements-form.component';
+import { AuditFormComponent } from './requirements/audits-form/audits-form.component';
 import { UsersComponent } from './users/users.component';
 import { UsersFormComponent } from './users/users-form/users-form.component';
 import { FileFieldComponent } from "./../../components/common/file-field/file-field.component";
@@ -119,13 +119,13 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     HomeComponent,
     DocumentItemComponent,
     RequirementsComponent,
-    RequirementsFormComponent,
+    AuditFormComponent,
     UsersComponent, UsersFormComponent, FileFieldComponent, DocumentsAttachementFormComponent, unitsResponsibleFormComponent, ActionPlanFormComponent
   ],
   exports: [MatAutocompleteModule],
   entryComponents: [CustomerGroupFormComponent,
     CustomersFormsComponent, unitsFormComponent, AreasFormComponent, AspectsFormComponent, DocumentsFormComponent, DocumentsAttachementFormComponent,
-    DocumentItemComponent, RequirementsFormComponent, UsersFormComponent, unitsResponsibleFormComponent, ActionPlanFormComponent
+    DocumentItemComponent, AuditFormComponent, UsersFormComponent, unitsResponsibleFormComponent, ActionPlanFormComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }]
