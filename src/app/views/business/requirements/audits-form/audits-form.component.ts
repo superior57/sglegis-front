@@ -8,12 +8,12 @@ import { CRUDService } from 'app/services/negocio/CRUDService/CRUDService';
 import { CustomersFormsComponent } from '../../customers/customers-forms/customers-forms.component';
 
 @Component({
-  selector: 'app-requirements-form',
-  templateUrl: './requirements-form.component.html',
-  styleUrls: ['./requirements-form.component.css']
+  selector: 'app-audits-form',
+  templateUrl: './audits-form.component.html',
+  styleUrls: ['./audits-form.component.css']
 })
-export class RequirementsFormComponent implements OnInit {
-  document_items: any[];
+export class AuditFormComponent implements OnInit {
+  item_area_aspect_id: any[];
   notify: Boolean = false;
   public audit: FormGroup;
   public historicals: any[] = [];
@@ -43,7 +43,7 @@ export class RequirementsFormComponent implements OnInit {
   prepareScreen(record: any) {
     
     this.audit = new FormGroup({
-      audit_id: new FormControl(null),
+      audit_id: new FormControl(record.audit_id),
       audit_practical_order: new FormControl('', [Validators.required]),
       audit_conformity: new FormControl('', [Validators.required]),
       audit_evidnece_compliance: new FormControl('', [Validators.required]),
@@ -58,7 +58,7 @@ export class RequirementsFormComponent implements OnInit {
         this.historicals = res.body;
 
         this.audit = new FormGroup({
-          audit_id: new FormControl(null),
+          audit_id: new FormControl(this.featuredHistory.audit_id  || 0),
           audit_practical_order: new FormControl(this.featuredHistory.audit_practical_order || '', [Validators.required]),
           audit_conformity: new FormControl(this.featuredHistory.audit_conformity || '', [Validators.required]),
           audit_evidnece_compliance: new FormControl(this.featuredHistory.audit_evidnece_compliance || '', [Validators.required]),
@@ -71,11 +71,11 @@ export class RequirementsFormComponent implements OnInit {
 
   initItems(record: any) {
     const documentItemIds = [];
-    this.document_items = [];
+    this.item_area_aspect_id = [];
     record.forEach(r => {      
-      if (!documentItemIds.includes(r.document_item_id)) {        
-        documentItemIds.push(r.document_item_id);
-        this.document_items.push(r);
+      if (!documentItemIds.includes(r.item_area_aspect_id)) {        
+        documentItemIds.push(r.item_area_aspect_id);
+        this.item_area_aspect_id.push(r);
       }
     });   
   }
@@ -86,9 +86,13 @@ export class RequirementsFormComponent implements OnInit {
     this.loader.open();
     datas.forEach(d => {
       let newAudit = {
-        ...audit, 
-        area_aspect_id: d.area_aspect_id,
-        document_item_id: d.document_item_id
+        audit_id: d.audit_id,
+        item_area_aspect_id: d.item_area_aspect_id,
+        unit_id: d.customer_unit_id,
+        audit_items: {
+          ...audit,
+          user_id: 1, //TODO: Pegar do contexto
+        }
       };
 
       this.crudService.Save(newAudit, this.data.new, "/audits", newAudit.audit_id).subscribe(res => {
@@ -144,8 +148,8 @@ export class RequirementsFormComponent implements OnInit {
 
   getAudits(record: any) {
     let params: any = [];    
-    params.document_item_ids = record.map(d => d.document_item_id);
-    params.area_aspect_ids = record.map(d => d.area_aspect_id);
+    params.item_area_aspect_id = record.map(d => d.item_area_aspect_id);
+    params.customer_unit_id = record.map(d => d.customer_unit_id);
 
     this.crudService.GetParams(params, "/audits").subscribe(res => {     
     })
@@ -172,8 +176,8 @@ export class RequirementsFormComponent implements OnInit {
     return new Promise((resolve) => {
       if (record.length === 1) {
         resolve(this.crudService.GetParams({
-          document_item_id: record[0].document_item_id,
-          area_aspect_id: record[0].area_aspect_id
+          item_area_aspect_id: record[0].item_area_aspect_id,
+          customer_unit_id: record[0].customer_unit_id
         }, "/audits/historicals").toPromise());
       } else {
         resolve(null);
