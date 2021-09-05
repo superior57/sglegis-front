@@ -10,7 +10,7 @@ import { EventEmitter } from 'events';
 import * as moment from 'moment';
 import { DocumentsFormComponent } from '../documents/documents-form/documents-form.component';
 import { ActionPlanFormComponent } from './action-plan-form/action-plan-form.component';
-import { RequirementsFormComponent } from './requirements-form/requirements-form.component';
+import { AuditFormComponent } from './audits-form/audits-form.component';
 
 @Component({
   selector: 'app-requirements',
@@ -94,7 +94,7 @@ export class RequirementsComponent implements OnInit {
     let text;
     text = (newRercord) ? "Novo Documento" : "Editar Documento: " + info.document_id;
 
-    let dialogRef: MatDialogRef<any> = this.dialog.open(RequirementsFormComponent, {
+    let dialogRef: MatDialogRef<any> = this.dialog.open(AuditFormComponent, {
       width: '900px',
       disableClose: true,
       data: { title: text, payload: this.selectedRows, new: newRercord }
@@ -117,7 +117,7 @@ export class RequirementsComponent implements OnInit {
       this.rows = [];
       const newArr = res.body;
       newArr.forEach(newRow => {
-        if (!this.rows.find(r => r.area_aspect_id === newRow.area_aspect_id && r.document_item_id === newRow.document_item_id)) {
+        if (!this.rows.find(r => r.item_area_aspect_id === newRow.item_area_aspect_id && r.customer_unit_id === newRow.customer_unit_id)) {
           let date = moment(newRow.document_date);
           this.rows.push({
             ...newRow,
