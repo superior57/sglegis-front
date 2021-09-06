@@ -107,14 +107,14 @@
               </button>
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="Descrição" [width]="300">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{row["attachment_description"]}}
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Data de upload" [width]="150">
+          <ngx-datatable-column name="Data de importação" [width]="150">
             <ng-template let-row="row" ngx-datatable-cell-template>
               {{row["date"]}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Nome do arquivo importado" [width]="300">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row["attachment_description"]}}
             </ng-template>
           </ngx-datatable-column>
 
@@ -143,11 +143,6 @@
           <ngx-datatable-column name="Item" [width]="200">
             <ng-template let-row="row" ngx-datatable-cell-template>
               {{row["document_item_number"]}}
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Assunto" [width]="200">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{row["document_item_subject"]}}
             </ng-template>
           </ngx-datatable-column>
           <ngx-datatable-column name="Descrição" [width]="300">

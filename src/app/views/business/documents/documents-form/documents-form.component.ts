@@ -250,7 +250,7 @@ export class DocumentsFormComponent implements OnInit {
     let dialogRef: MatDialogRef<any> = this.dialog.open(DocumentsAttachementFormComponent, {
       width: dialog.small,
       disableClose: true,
-      data: { title: "New Attachment to document", payload: this.documentForm.value, new: true }
+      data: { title: "Anexar PDF", payload: this.documentForm.value, new: true }
     });
 
     dialogRef.afterClosed().subscribe(res => {
