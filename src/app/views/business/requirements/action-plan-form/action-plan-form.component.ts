@@ -40,7 +40,7 @@ export class ActionPlanFormComponent implements OnInit {
       deadline: new FormControl('', [Validators.required]),
     });
 
-    this.activity.controls['deadline'].setValue(dateFormat(new Date(), "MM/DD/yyyy"));
+    this.activity.controls['deadline'].setValue(dateFormat(new Date(), "DD/MM/yyyy"));
     this.getActionPlans(record);
   }
 
@@ -71,7 +71,7 @@ export class ActionPlanFormComponent implements OnInit {
           unit_name: this.actionPlan.customer_unit_name,
           aspect_name: this.actionPlan.area_aspect_name,
           customer_name,
-          actionplan_items: [...this.activityChanges.map(a => ({ ...a, deadline: dateFormat(a.deadline, "MM/DD/yyyy") }))]
+          actionplan_items: [...this.activityChanges.map(a => ({ ...a, deadline: dateFormat(a.deadline, "DD/MM/yyyy") }))]
         }
       };  
   
@@ -94,7 +94,7 @@ export class ActionPlanFormComponent implements OnInit {
     
     const newActivity = {
       ...activity,
-      deadline: dateFormat(activity.deadline, "MM/DD/YY"),
+      deadline: dateFormat(activity.deadline, "DD/MM/YYYY"),
       status: 0,
       actionplan_id: this.actionPlan.actionplan_id,
       fake_id: this.activities.length

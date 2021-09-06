@@ -185,7 +185,9 @@ export class DocumentsFormComponent implements OnInit {
 
   saveDocument() {
     let form = this.documentForm.value;
-    form.document_date = form.document_date.substr(0, 10).split('/').reverse().join('-');
+    form.document_date = this.convertData(form.document_date);
+    //form.document_date = form.document_date.substr(0, 10).split('/').reverse().join('-');
+
     this.loader.open();
     this.crudService.Save(form, this.data.new, "/document", form.document_id).subscribe(res => {
       if (res.status == 200) {
@@ -313,4 +315,13 @@ export class DocumentsFormComponent implements OnInit {
     window.open(`${environment.fileURL}/${data.attachment_src}`);
   }
 
+  convertData (strData) {
+    if (strData.includes('-'))
+      return;
+    let dia = strData.substring(0, 2);
+    let mes = strData.substring(2, 4);
+    let ano = strData.substring(4, 8);
+    const newData = `${ano}-${mes}-${dia}`
+    return newData;
+}
 }
