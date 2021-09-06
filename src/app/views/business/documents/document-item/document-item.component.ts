@@ -30,7 +30,6 @@ export class DocumentItemComponent implements OnInit {
   prepareScreen(record) {
     this.documentItemForm = new FormGroup({
       document_item_id: new FormControl(record.document_item_id),
-      document_item_subject: new FormControl(record.document_item_subject, [Validators.required]),
       document_item_number: new FormControl(record.document_item_number, [Validators.required]),
       document_item_order: new FormControl(record.document_item_order, [Validators.required]),
       document_item_status_id: new FormControl(record.document_item_status_id, [Validators.required]),

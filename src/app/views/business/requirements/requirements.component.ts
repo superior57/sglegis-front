@@ -82,7 +82,6 @@ export class RequirementsComponent implements OnInit {
       new CampoBusca("area_name", "Sist.Gestão", 50, "", "LIST", areas, "area_name", "area_id"),
       new CampoBusca("document_scope_id", "Âmbito", 50, "", "LIST", scopes, "document_scope_description", "document_scope_id"),
       new CampoBusca("document_item_number", "Número", 50, "", "string", null, null, null),
-      new CampoBusca("document_item_subject", "Ementa", 50, "", "string", null, null, null),
       new CampoBusca("document_number", "Documento", 50, "", "string", null, null, null),
     ];
 

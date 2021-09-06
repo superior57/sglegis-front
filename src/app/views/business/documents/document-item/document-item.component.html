@@ -5,21 +5,14 @@
   <mat-dialog-content>
     <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
 
-      <div fxFlex="20" class="pr-1">
+      <div fxFlex="30" class="pr-1">
         <mat-form-field class="full-width">
           <input matInput name="item" placeholder="Item*" maxlength="10" upperCase
             [formControl]="documentItemForm.controls['document_item_number']" />
         </mat-form-field>
       </div>
 
-      <div fxFlex="80" class="pr-1">
-        <mat-form-field class="full-width">
-          <input matInput name="assunto" placeholder="Assunto do item*" maxlength="100" upperCase
-            [formControl]="documentItemForm.controls['document_item_subject']" />
-        </mat-form-field>
-      </div>
-
-      <div fxFlex="30" class="pr-1">
+      <div fxFlex="50" class="pr-1">
         <mat-form-field class="full-width">
           <mat-select placeholder="Status *" [formControl]="documentItemForm.controls['document_item_status_id']">
             <mat-option *ngFor="let status of documentsStatus" [value]="status.status_id">
