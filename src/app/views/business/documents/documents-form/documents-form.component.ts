@@ -317,7 +317,9 @@ export class DocumentsFormComponent implements OnInit {
 
   convertData (strData) {
     if (strData.includes('-'))
-      return;
+      return strData;
+    if (strData.includes('/'))
+      strData = strData.replaceAll('/', '');
     let dia = strData.substring(0, 2);
     let mes = strData.substring(2, 4);
     let ano = strData.substring(4, 8);
