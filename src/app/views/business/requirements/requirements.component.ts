@@ -57,10 +57,10 @@ export class RequirementsComponent implements OnInit {
   ) { }
 
   prepareScreen() {
-    this.setConfigSearch();
-    this.getDocuments(undefined);
     this.loadConformity();
     this.loadPraticalOrder();
+    this.setConfigSearch();
+    this.getDocuments(undefined);
   }
 
   onFilterValueChange(type: string, value: any) {
