@@ -12,6 +12,7 @@ export class BaseService {
   constructor( ) {  }
 
   public handleError(error: HttpErrorResponse) {
+    //TODO: Log erros on Sentry
     console.log("erro no servidor:"+error.message);
     
     if (error.error instanceof ErrorEvent) {      

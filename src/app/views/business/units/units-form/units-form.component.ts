@@ -9,7 +9,6 @@ import { AppLoaderService } from 'app/services/dialogs/app-loader/app-loader.ser
 import { CRUDService } from 'app/services/negocio/CRUDService/CRUDService';
 import { CustomerGroupFormComponent } from '../../customer-groups/customer-group-form/customer-group-form.component';
 import { CustomersFormsComponent } from '../../customers/customers-forms/customers-forms.component';
-import { UsersFormComponent } from '../../users/users-form/users-form.component';
 
 @Component({
   selector: 'app-units-form',
@@ -43,7 +42,6 @@ export class unitsFormComponent implements OnInit {
   prepareScreen(record) {
     this.unitForm = new FormGroup({
       customer_unit_id: new FormControl(record.customer_unit_id),
-      customer_unit_x: new FormControl(record.customer_unit_id),
       customer_unit_cnpj: new FormControl(record.customer_unit_cnpj, []),
       customer_unit_name: new FormControl(record.customer_unit_name, [Validators.required, Validators.maxLength(50), Validators.minLength(3)]),
       customer_unit_address: new FormControl(record.customer_unit_address, []),
