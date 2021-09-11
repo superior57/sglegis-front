@@ -188,7 +188,9 @@ export class AuditFormComponent implements OnInit {
   }
 
   getPraticName(id) {
-    return this.pratics.find(p => p.id === id).desc;
+    let v = this.pratics.find(p => p.id === id);
+    if (v)
+      return v.desc;
   }
 
   getConformityName(id) {
