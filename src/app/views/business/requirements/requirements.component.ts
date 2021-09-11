@@ -60,7 +60,7 @@ export class RequirementsComponent implements OnInit {
     this.loadConformity();
     this.loadPraticalOrder();
     this.setConfigSearch();
-    this.getDocuments(undefined);
+    this.getAuditRequirements(undefined);
   }
 
   onFilterValueChange(type: string, value: any) {
@@ -72,14 +72,14 @@ export class RequirementsComponent implements OnInit {
   async setConfigSearch() {    
 
     let groups = await this.getGroups();
-    let scopes = await this.getDocumentScopes();
+    let scopes = await this.getAuditRequirementscopes();
     let areas = await this.getAreas();
 
     let aux = [      
       new CampoBusca("customer_group_id", "Grupo", 50, "", "LIST", groups, "customer_group_name", "customer_group_id"),
       new CampoBusca("customer_id", "Matriz", 50, "", "LIST", [], "customer_business_name", "customer_id"),
       new CampoBusca("customer_unit_name", "Unidade", 50, "", "string", null, null, null),
-      new CampoBusca("area_name", "Sist.Gestão", 50, "", "LIST", areas, "area_name", "area_id"),
+      new CampoBusca("area_id", "Sist.Gestão", 50, "", "LIST", areas, "area_name", "area_id"),
       new CampoBusca("document_scope_id", "Âmbito", 50, "", "LIST", scopes, "document_scope_description", "document_scope_id"),
       new CampoBusca("document_item_number", "Número", 50, "", "string", null, null, null),
       new CampoBusca("document_number", "Documento", 50, "", "string", null, null, null),
@@ -107,13 +107,13 @@ export class RequirementsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(res => {             
-      this.getDocuments(this.lastSearch);
+      this.getAuditRequirements(this.lastSearch);
       this.selectedRows = [];      
       return;
     });
   }
 
-  getDocuments(parameter: any) {
+  getAuditRequirements(parameter: any) {
     if (this.currentUser.role !== roles.admin) {
       parameter = {
         customer_id: this.currentUser.customer_id
@@ -198,7 +198,7 @@ export class RequirementsComponent implements OnInit {
     this.prepareScreen();
   }
   
-  getDocumentScopes() {
+  getAuditRequirementscopes() {
     return this.crud.GetParams(undefined, "/documentscope").toPromise().then(res => res.body);
   }
   
