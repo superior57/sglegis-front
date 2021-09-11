@@ -69,6 +69,13 @@ export class RequirementsComponent implements OnInit {
     if (type === 'customer_group_id') {
       this.getCustomers(value);      
     }
+    if (type === 'customer_id') {
+      this.getUnits(value);      
+    }
+    if (type === 'area_id') {
+      this.getAspects(value);      
+    }
+    
   }
 
   async setConfigSearch() {    
@@ -80,9 +87,9 @@ export class RequirementsComponent implements OnInit {
     let aux = [      
       new CampoBusca("customer_group_id", "Grupo", 50, "", "LIST", groups, "customer_group_name", "customer_group_id"),
       new CampoBusca("customer_id", "Matriz", 50, "", "LIST", [], "customer_business_name", "customer_id"),
-      new CampoBusca("customer_unit_name", "Unidade", 50, "", "string", null, null, null),
+      new CampoBusca("customer_unit_id", "Unidade", 50, "", "LIST", [], "customer_unit_name", "customer_unit_id"),
       new CampoBusca("area_id", "Sist.Gestão", 50, "", "LIST", areas, "area_name", "area_id"),
-      new CampoBusca("area_aspect_id", "Aspecto", 50, "", "LIST", areas, "area_aspect_name", "area_aspect_id"),
+      new CampoBusca("area_aspect_id", "Aspecto", 50, "", "LIST", [], "area_aspect_name", "area_aspect_id"),
       new CampoBusca("document_scope_id", "Âmbito", 50, "", "LIST", scopes, "document_scope_description", "document_scope_id"),
       new CampoBusca("document_item_number", "Número", 50, "", "string", null, null, null),
       new CampoBusca("document_number", "Documento", 50, "", "string", null, null, null),
@@ -139,33 +146,6 @@ export class RequirementsComponent implements OnInit {
     })
   }
 
-  getCustomers(group_id) {        
-    if (group_id != 0) {
-      let p: any = new Object();
-      p.orderby = "customer_business_name";
-      p.direction = "asc";
-      p.fields = "customer_group_id";
-      p.ops = "eq";
-      p.values = group_id;
-      this.crud.GetParams(p, "/customer/query").subscribe(res => {
-        let customers = res.body;
-        this.configSearch[1].lista = customers;        
-        this.syncInit = true;
-      });
-    } else {
-      let p: any = new Object();
-      p.orderby = "customer_business_name";
-      p.direction = "asc";
-      p.field = "customer_group_id"
-      console.log('555');
-      
-      this.crud.GetParams(p, "/customer").subscribe(res => {
-        let customers = res.body;
-        this.configSearch[1].lista = customers;        
-        this.syncInit = true;
-      });
-    }
-  }
 
   
   handleActionPlan(registro: any) {     
@@ -208,9 +188,69 @@ export class RequirementsComponent implements OnInit {
   getGroups() {
     return this.crud.GetParams({ "orderby": "customer_group_name", "direction": "asc" }, "/customergroup").toPromise().then(res => res.body);
   }
+  getCustomers(group_id) {        
+    if (group_id) {
+      let p: any = new Object();
+      p.orderby = "customer_business_name";
+      p.direction = "asc";
+      p.fields = "customer_group_id";
+      p.ops = "eq";
+      p.values = group_id;
+      this.crud.GetParams(p, "/customer/query").subscribe(res => {
+        let customers = res.body;
+        this.configSearch[1].lista = customers;        
+        this.syncInit = true;
+      });
+    } else {
+      let p: any = new Object();
+      p.orderby = "customer_business_name";
+      p.direction = "asc";
+      p.field = "customer_group_id"
+      
+      this.crud.GetParams(p, "/customer").subscribe(res => {
+        let customers = res.body;
+        this.configSearch[1].lista = customers;        
+        this.syncInit = true;
+      });
+    }
+  }
+  getUnits(customer_id) {
+    if (customer_id) {
+      let p: any = new Object();
+      p.orderby = "customer_unit_name";
+      p.direction = "asc";
+      p.fields = "customer_id";
+      p.ops = "eq";
+      p.values = customer_id;
+      this.crud.GetParams(p, "/customerunit/query").subscribe(res => {
+        let units = res.body;
+        this.configSearch[2].lista = units;        
+        this.syncInit = true;
+      });
+    } else {
+      let p: any = new Object();
+      p.orderby = "customer_unit_name";
+      p.direction = "asc";
+      p.field = "customer_id"
+      
+      this.crud.GetParams(p, "/customerunit").subscribe(res => {
+        let units = res.body;
+        this.configSearch[2].lista = units;        
+        this.syncInit = true;
+      });
+    }
+  }
 
   getAreas() {
-    return this.crud.GetParams(undefined, "/area").toPromise().then(res => res.body);
+    return this.crud.GetParams({ "orderby": "area_name", "direction": "asc" }, "/area").toPromise().then(res => res.body);
+  }
+  getAspects(area_id) {
+    return this.crud.GetParams({ "orderby": "area_aspect_name", "direction": "asc", "fields": "area_id", "ops": "eq", "values": area_id }, "/areaaspect")
+      .subscribe(res => {
+        let aspects = res.body;
+        this.configSearch[4].lista = aspects;
+        this.syncInit = true;
+    })
   }
 
   getPraticName(id) {
