@@ -41,6 +41,8 @@ export class RequirementsComponent implements OnInit {
     { Propriedade: 'audit_practical_order_description', Titulo: 'Ordem Prática', Visivel: true, Largura: 100 },
     { Propriedade: 'audit_control_action', Titulo: 'Controle', Visivel: true, Largura: 100 },
     { Propriedade: 'audit_evidnece_compliance', Titulo: 'Evidência', Visivel: true, Largura: 100 },
+    { Propriedade: 'audit_updated_at', Titulo: 'Avaliação', Visivel: false, Largura: 100 },
+    
   ]
 
   currentUser: any;
