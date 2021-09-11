@@ -24,8 +24,8 @@ export class RequirementsComponent implements OnInit {
   configSearch: any = [];
 
   columns = [
-    { Propriedade: 'customer_business_name', Titulo: 'Matriz', Visivel: true, Largura:100 },
-    { Propriedade: 'customer_unit_name', Titulo: 'Unidade', Visivel: true, Largura:100 },
+    // { Propriedade: 'customer_business_name', Titulo: 'Matriz', Visivel: true, Largura:100 },
+    // { Propriedade: 'customer_unit_name', Titulo: 'Unidade', Visivel: true, Largura:100 },
     { Propriedade: 'area_name', Titulo: 'Sis.Gestão', Visivel: true, Largura:100 },
     { Propriedade: 'area_aspect_name', Titulo: 'Aspecto', Visivel: true, Largura:150 },
     // { Propriedade: 'customer_unit_name', Titulo: 'unit', Visivel: true, Largura:200 },
@@ -38,7 +38,9 @@ export class RequirementsComponent implements OnInit {
     // { Propriedade: 'customer_business_name', Titulo: 'Cliente', Visivel: true, Largura: 150 },
     // { Propriedade: 'customer_unit_name', Titulo: 'Unidade', Visivel: true, Largura: 150 },
     { Propriedade: 'audit_conformity_description', Titulo: 'Conformidade', Visivel: true, Largura: 100 },
-    { Propriedade: 'audit_practical_order_description', Titulo: 'Ordem Prática', Visivel: true, Largura:100 },
+    { Propriedade: 'audit_practical_order_description', Titulo: 'Ordem Prática', Visivel: true, Largura: 100 },
+    { Propriedade: 'audit_control_action', Titulo: 'Controle', Visivel: true, Largura: 100 },
+    { Propriedade: 'audit_evidnece_compliance', Titulo: 'Evidência', Visivel: true, Largura: 100 },
   ]
 
   currentUser: any;
@@ -80,6 +82,7 @@ export class RequirementsComponent implements OnInit {
       new CampoBusca("customer_id", "Matriz", 50, "", "LIST", [], "customer_business_name", "customer_id"),
       new CampoBusca("customer_unit_name", "Unidade", 50, "", "string", null, null, null),
       new CampoBusca("area_id", "Sist.Gestão", 50, "", "LIST", areas, "area_name", "area_id"),
+      new CampoBusca("area_aspect_id", "Aspecto", 50, "", "LIST", areas, "area_aspect_name", "area_aspect_id"),
       new CampoBusca("document_scope_id", "Âmbito", 50, "", "LIST", scopes, "document_scope_description", "document_scope_id"),
       new CampoBusca("document_item_number", "Número", 50, "", "string", null, null, null),
       new CampoBusca("document_number", "Documento", 50, "", "string", null, null, null),
