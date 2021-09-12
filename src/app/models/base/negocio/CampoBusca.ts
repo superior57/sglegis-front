@@ -21,7 +21,8 @@ export class CampoBusca {
         private _lista: any[],
         private _fieldText: string,
         private _fieldValue: string,
-        private _disabled: boolean = false) {
+        private _disabled: boolean = false,
+    ) {
         this.nomeCampo = _nomeCampo;
         this.labelCampo = _labelCampo;
         this.maskCampo = _maskCampo;
@@ -30,7 +31,7 @@ export class CampoBusca {
         this.lista = _lista;
         this.fieldText = _fieldText;
         this.fieldValue = _fieldValue;
-        this.disabled = _disabled;    
+        this.disabled = _disabled;
     }
 
 }

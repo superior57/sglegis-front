@@ -32,16 +32,16 @@ export class RequirementsComponent implements OnInit {
     // { Propriedade: 'area_name', Titulo: 'Area', Visivel: true, Largura:100 },
     // { Propriedade: 'document_item_subject', Titulo: 'Assunto', Visivel: true, Largura:100 },
     { Propriedade: 'document_scope_description', Titulo: 'Âmbito', Visivel: true, Largura:100 },
-    { Propriedade: 'document_number', Titulo: 'Documento', Visivel: true, Largura:100 },
+    { Propriedade: 'document_name', Titulo: 'Documento', Visivel: true, Largura:200 },
     { Propriedade: 'document_item_number', Titulo: 'Item', Visivel: true, Largura:100 },
     { Propriedade: 'document_date_status', Titulo: 'Data/Status', Visivel: true, Largura:200},    
     // { Propriedade: 'customer_business_name', Titulo: 'Cliente', Visivel: true, Largura: 150 },
     // { Propriedade: 'customer_unit_name', Titulo: 'Unidade', Visivel: true, Largura: 150 },
     { Propriedade: 'audit_conformity_description', Titulo: 'Conformidade', Visivel: true, Largura: 100 },
     { Propriedade: 'audit_practical_order_description', Titulo: 'Ordem Prática', Visivel: true, Largura: 100 },
-    { Propriedade: 'audit_control_action', Titulo: 'Controle', Visivel: true, Largura: 100 },
-    { Propriedade: 'audit_evidnece_compliance', Titulo: 'Evidência', Visivel: true, Largura: 100 },
-    { Propriedade: 'audit_updated_at', Titulo: 'Avaliação', Visivel: false, Largura: 100 },
+    { Propriedade: 'audit_control_action', Titulo: 'Controle', Visivel: true, Largura: 300 },
+    { Propriedade: 'audit_evidnece_compliance', Titulo: 'Evidência', Visivel: true, Largura: 300 },
+    { Propriedade: 'audit_date', Titulo: 'Avaliação', Visivel: true, Largura: 100 },
     
   ]
 
@@ -85,6 +85,8 @@ export class RequirementsComponent implements OnInit {
     let groups = await this.getGroups();
     let scopes = await this.getAuditRequirementscopes();
     let areas = await this.getAreas();
+    let praticalorder = await this.pratics;
+    let conformity = await this.conforms;
 
     let aux = [      
       new CampoBusca("customer_group_id", "Grupo", 50, "", "LIST", groups, "customer_group_name", "customer_group_id"),
@@ -93,8 +95,10 @@ export class RequirementsComponent implements OnInit {
       new CampoBusca("area_id", "Sist.Gestão", 50, "", "LIST", areas, "area_name", "area_id"),
       new CampoBusca("area_aspect_id", "Aspecto", 50, "", "LIST", [], "area_aspect_name", "area_aspect_id"),
       new CampoBusca("document_scope_id", "Âmbito", 50, "", "LIST", scopes, "document_scope_description", "document_scope_id"),
-      new CampoBusca("document_item_number", "Número", 50, "", "string", null, null, null),
-      new CampoBusca("document_number", "Documento", 50, "", "string", null, null, null),
+      new CampoBusca("document_type", "Documento", 50, "", "string", null, null, null),
+      new CampoBusca("document_number", "Número", 50, "", "string", null, null, null),
+      new CampoBusca("audit_conformity", "Conformidade", 50, "", "LIST", conformity, "desc", "id"),
+      new CampoBusca("audit_practical_order", "Ordem Prática", 50, "", "LIST", praticalorder, "desc", "id"),
     ];
 
     if (this.currentUser.role !== roles.admin) {
@@ -136,12 +140,22 @@ export class RequirementsComponent implements OnInit {
       const newArr = res.body;
       newArr.forEach(newRow => {
         if (!this.rows.find(r => r.item_area_aspect_id === newRow.item_area_aspect_id && r.customer_unit_id === newRow.customer_unit_id)) {
+
           let date = moment(newRow.document_date);
+
+          let audit_date = newRow.audit_updated_at;
+          if (audit_date)
+            audit_date = moment(newRow.audit_updated_at).format('DD/MM/yyyy');
+          else
+            audit_date = null;
+
           this.rows.push({
             ...newRow,
             document_date_status: `${date.format('DD/MM/yyyy')} - ${newRow.status_description}`,
+            document_name: `${newRow.document_type} - ${ (newRow.document_number) ? newRow.document_number : "S/No"}`,
             audit_practical_order_description: this.getPraticName(newRow.audit_practical_order),
             audit_conformity_description: this.getConformityName(newRow.audit_conformity),
+            audit_date: audit_date,
           });
         }
       });
@@ -187,6 +201,8 @@ export class RequirementsComponent implements OnInit {
     return this.crud.GetParams(undefined, "/documentscope").toPromise().then(res => res.body);
   }
   
+//#region GROUP CUSTOMER UNIT
+
   getGroups() {
     return this.crud.GetParams({ "orderby": "customer_group_name", "direction": "asc" }, "/customergroup").toPromise().then(res => res.body);
   }
@@ -242,7 +258,8 @@ export class RequirementsComponent implements OnInit {
       });
     }
   }
-
+//#endregion
+  
   getAreas() {
     return this.crud.GetParams({ "orderby": "area_name", "direction": "asc" }, "/area").toPromise().then(res => res.body);
   }
@@ -256,14 +273,10 @@ export class RequirementsComponent implements OnInit {
   }
 
   getPraticName(id) {
-    if (!id)
-      id = 1; //default "A VERIFICAR"
     return this.pratics.find(p => p.id === id).desc;
   }
 
   getConformityName(id) {
-    if (!id)
-      id = 1; //default "A VERIFICAR"
     return this.conforms.find(c => c.id === id).desc;
   }
 

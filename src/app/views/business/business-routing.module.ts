@@ -89,7 +89,7 @@ const routes: Routes = [
     children: [{
       path: 'audit',
       component: RequirementsComponent,
-      data: { title: 'Acompanhamento de Conformidade Legal', breadcrumb: 'Requisitos' }
+      data: { title: 'Acompanhamento de Conformidade Legal', breadcrumb: 'Conformidade Legal' }
     }]
   },
 ];

@@ -1,7 +1,7 @@
 <div>
   <mat-toolbar color="primary" style="height: 40px;">
     <div fxFlex class="search-bar" style="height: 80%" *ngIf="(MostrarBarraBusca===true)">
-      <form class="top-search-form" [formGroup]="buscarForm" autocomplete="off" #buscadorForm>
+      <form class="top-search-form" [formGroup]="buscarForm" autocomplete="on" #buscadorForm>
         <mat-icon role="img" style="cursor:pointer;" (click)="showFinderToggle()">search</mat-icon>
         <input autofocus="true" placeholder="Procurar" type="text" style="height: 95%; padding: 0 0 0 10px;"
           (click)="showFinderToggle()" class="txtFinder" #txtFinder readonly>
@@ -9,7 +9,7 @@
           <div *ngIf="(formReady)">
             <div [ngClass]="finderPanel? 'dropdown-content show': 'dropdown-content'">
               <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap" style="padding: 10px; font-size: 13px">
-                <div fxFlex="50" class="pr-1" *ngFor='let campo of CamposBusca'>
+                <div fxFlex="33" class="pr-1" *ngFor='let campo of CamposBusca'>
                   <mat-form-field class="full-width" *ngIf="(campo.tipoCampo =='string')">
                     <input matInput name="campo.nomeCampo" [placeholder]="campo.labelCampo"
                       [maxLength]="campo.maxLengthCampo" [mask]="campo.maskCampo" upperCase type="text"
@@ -58,7 +58,6 @@
         </mat-dialog-content>
       </form>
     </div>
-    <span fxFlex *ngIf="(MostrarBarraBusca===false)">Pedidos liberados</span>
     <button mat-icon-button [matMenuTriggerFor]="ColunasMenu">
       <mat-icon>filter_list</mat-icon>
     </button>
@@ -94,9 +93,9 @@
     <ngx-datatable class="material striped" 
       [columnMode]="'force'" 
       [headerHeight]="50" 
-      [footerHeight]="50"
+      [footerHeight]=""
       [rowHeight]="'auto'" 
-      [limit]="100" 
+      [limit]="" 
       [rows]="Linhas" 
       [messages]="{emptyMessage: 'Nenhuma informação encontrada'}"
       [scrollbarH]="true"
