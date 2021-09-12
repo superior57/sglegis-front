@@ -102,9 +102,10 @@ export class RequirementsComponent implements OnInit {
     ];
 
     if (this.currentUser.role !== roles.admin) {
-      aux[1].fieldValue = this.currentUser.customer_id;
-      aux[0].disabled = true;
+      aux[0].disabled = true; //group
+      aux[1].fieldValue = this.currentUser.customer_id; 
     }
+
 
     this.configSearch = aux;
     this.syncInit = true;

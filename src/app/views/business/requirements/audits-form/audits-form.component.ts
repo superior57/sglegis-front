@@ -103,11 +103,11 @@ export class AuditFormComponent implements OnInit {
           this.notifyResponsibles(datas.map(d => d.area_aspect_id), [
             {
               label: 'Ordem prática',
-              desc: this.pratics.find(p => p.id === audit.audit_practical_order).desc
+              desc: this.pratics.find(p => p.id === audit.audit_practical_order_id).audit_practical_order_desc
             },
             {
               label: 'Conformidade',
-              desc: this.conforms.find(c => c.id === audit.audit_conformity).desc
+              desc: this.conforms.find(c => c.id === audit.audit_conformity_id).audit_conformity_desc
             },
             {
               label: 'Evidência de cumprimento',
@@ -188,13 +188,15 @@ export class AuditFormComponent implements OnInit {
   }
 
   getPraticName(id) {
-    let v = this.pratics.find(p => p.id === id);
+    let v = this.pratics.find(p => p.audit_practical_order_id === id);
     if (v)
-      return v.desc;
+      return v.audit_practical_order_desc;
   }
 
   getConformityName(id) {
-    return this.conforms.find(c => c.id === id).desc;
+    let c = this.conforms.find(c => c.audit_conformity_id === id);
+    if (c)
+      return c.audit_conformity_desc;
   }
 
   loadPraticalOrder() {

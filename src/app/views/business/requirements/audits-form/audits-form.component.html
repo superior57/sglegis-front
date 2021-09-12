@@ -7,8 +7,8 @@
       <div fxFlex="50" class="pr-1">
         <mat-form-field class="full-width">
           <mat-select placeholder="Ordem prática" [formControl]="audit.controls['audit_practical_order']">
-            <mat-option *ngFor="let pratic of pratics" [value]="pratic.id">
-              {{pratic.desc}} </mat-option>
+            <mat-option *ngFor="let pratic of pratics" [value]="pratic.audit_practical_order_id">
+              {{pratic.audit_practical_order_desc}} </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -16,8 +16,8 @@
       <div fxFlex="50" class="pr-1">
         <mat-form-field class="full-width">
           <mat-select placeholder="Conformidade" [formControl]="audit.controls['audit_conformity']">
-            <mat-option *ngFor="let conform of conforms" [value]="conform.id">
-              {{conform.desc}} </mat-option>
+            <mat-option *ngFor="let conform of conforms" [value]="conform.audit_conformity_id">
+              {{conform.audit_conformity_desc}} </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
