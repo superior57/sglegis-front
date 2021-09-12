@@ -274,11 +274,15 @@ export class RequirementsComponent implements OnInit {
   }
 
   getPraticName(id) {
-    return this.pratics.find(p => p.audit_practical_order_id === id).audit_practical_order_desc;
+    let p = this.pratics.find(p => p.audit_practical_order_id === id);
+    if (p)
+      return p.audit_practical_order_desc;
   }
 
   getConformityName(id) {
-    return this.conforms.find(c => c.audit_conformity_id === id).audit_conformity_desc;
+    let c = this.conforms.find(c => c.audit_conformity_id === id);
+    if (c)
+      return c.audit_conformity_desc;
   }
 
   async loadPraticalOrder() {
