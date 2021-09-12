@@ -78,7 +78,7 @@
 
   <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap" style="padding-left: 20px;margin-top: 10px;" *ngIf="(showFilter)">
       <mat-chip-list aria-label="Fish selection" *ngFor='let campo of CamposBusca'>
-        <mat-chip *ngIf="(buscarForm.controls[campo.nomeCampo].value)">{{campo.labelCampo}} : {{buscarForm.controls[campo.nomeCampo].value}}</mat-chip>        
+        <mat-chip *ngIf="(buscarForm.controls[campo.nomeCampo].value)">{{campo.labelCampo}} : {{ getValue(campo) }}</mat-chip>        
       </mat-chip-list>
   </div>
 
@@ -90,8 +90,8 @@
   </div>
 
   <div style="margin-top: 10px;">
-    <ngx-datatable class="material striped" 
-      [columnMode]="'force'" 
+    <ngx-datatable class="material fullscreen" 
+      [columnMode]="'standard'" 
       [headerHeight]="50" 
       [footerHeight]=""
       [rowHeight]="'auto'" 
@@ -156,7 +156,7 @@
       <!-- </div> -->
 
       <!-- <div > -->
-        <ngx-datatable-column name="Plano de ação" [flexGrow]="0" [width]="200" *ngIf="(BtnAction)">
+        <ngx-datatable-column name="Plano de ação" [flexGrow]="0" [width]="100" *ngIf="(BtnAction)">
           <ng-template let-row="row" ngx-datatable-cell-template>
             <button *ngIf="(BtnAction)" mat-raised-button mat-sm-button color="primary" class="mr-1"
               (click)="onAction(row)">

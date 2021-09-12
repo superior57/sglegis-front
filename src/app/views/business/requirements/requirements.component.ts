@@ -97,8 +97,8 @@ export class RequirementsComponent implements OnInit {
       new CampoBusca("document_scope_id", "Âmbito", 50, "", "LIST", scopes, "document_scope_description", "document_scope_id"),
       new CampoBusca("document_type", "Documento", 50, "", "string", null, null, null),
       new CampoBusca("document_number", "Número", 50, "", "string", null, null, null),
-      new CampoBusca("audit_conformity", "Conformidade", 50, "", "LIST", conformity, "desc", "id"),
-      new CampoBusca("audit_practical_order", "Ordem Prática", 50, "", "LIST", praticalorder, "desc", "id"),
+      new CampoBusca("audit_conformity_id", "Conformidade", 50, "", "LIST", conformity, "audit_conformity_desc", "audit_conformity_id"),
+      new CampoBusca("audit_practical_order_id", "Ordem Prática", 50, "", "LIST", praticalorder, "audit_practical_order_desc", "audit_practical_order_id"),
     ];
 
     if (this.currentUser.role !== roles.admin) {
@@ -153,8 +153,8 @@ export class RequirementsComponent implements OnInit {
             ...newRow,
             document_date_status: `${date.format('DD/MM/yyyy')} - ${newRow.status_description}`,
             document_name: `${newRow.document_type} - ${ (newRow.document_number) ? newRow.document_number : "S/No"}`,
-            audit_practical_order_description: this.getPraticName(newRow.audit_practical_order),
-            audit_conformity_description: this.getConformityName(newRow.audit_conformity),
+            audit_practical_order_description: this.getPraticName(newRow.audit_practical_order_id),
+            audit_conformity_description: this.getConformityName(newRow.audit_conformity_id),
             audit_date: audit_date,
           });
         }
@@ -273,11 +273,11 @@ export class RequirementsComponent implements OnInit {
   }
 
   getPraticName(id) {
-    return this.pratics.find(p => p.id === id).desc;
+    return this.pratics.find(p => p.audit_practical_order_id === id).audit_practical_order_desc;
   }
 
   getConformityName(id) {
-    return this.conforms.find(c => c.id === id).desc;
+    return this.conforms.find(c => c.audit_conformity_id === id).audit_conformity_desc;
   }
 
   async loadPraticalOrder() {

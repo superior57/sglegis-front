@@ -71,9 +71,8 @@ export class GradeComponent implements OnInit {
       
       this.buscarForm.addControl(this.CamposBusca[i].nomeCampo, new FormControl(
         this.CamposBusca[i].tipoCampo === "LIST" &&
-          (this.CamposBusca[i].fieldValue === this.CamposBusca[i].nomeCampo ||
-            this.CamposBusca[i].fieldValue === "id") ? "" : this.CamposBusca[i].fieldValue)
-      );
+          (this.CamposBusca[i].fieldValue === this.CamposBusca[i].nomeCampo ? "" : this.CamposBusca[i].fieldValue)
+      ));
       this.buscarForm.controls[this.CamposBusca[i].nomeCampo].valueChanges.subscribe(res => {
         this.filterValueChange.emit({
           type: this.CamposBusca[i].nomeCampo,
@@ -231,5 +230,13 @@ export class GradeComponent implements OnInit {
     this.finderPanel = false;
   }
 
+  getValue(field) {
+    if (!field || !field.value)
+      return;
+    if (field.tipoCampo == "LIST")
+      return field.lista.find(p => p[field.nomeCampo] == field.value)[field.fieldText]
+    else
+      return field.value;
+  }
 
 }
