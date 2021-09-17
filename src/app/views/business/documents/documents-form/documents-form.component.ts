@@ -67,7 +67,6 @@ export class DocumentsFormComponent implements OnInit {
       document_summary: new FormControl(record.document_summary, [Validators.required]),
       document_state_id: new FormControl(record.document_state_id),
       document_city_id: new FormControl(record.document_city_id),
-      document_file: new FormControl()
     });
     
     this.documentForm.controls.document_date.setValue(

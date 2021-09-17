@@ -24,8 +24,8 @@ export class RequirementsComponent implements OnInit {
   configSearch: any = [];
 
   columns = [
-    // { Propriedade: 'customer_business_name', Titulo: 'Matriz', Visivel: true, Largura:100 },
-    // { Propriedade: 'customer_unit_name', Titulo: 'Unidade', Visivel: true, Largura:100 },
+    { Propriedade: 'customer_business_name', Titulo: 'Matriz', Visivel: true, Largura:100 },
+    { Propriedade: 'customer_unit_name', Titulo: 'Unidade', Visivel: true, Largura:100 },
     { Propriedade: 'area_name', Titulo: 'Sis.Gestão', Visivel: true, Largura:100 },
     { Propriedade: 'area_aspect_name', Titulo: 'Aspecto', Visivel: true, Largura:150 },
     // { Propriedade: 'customer_unit_name', Titulo: 'unit', Visivel: true, Largura:200 },
@@ -77,7 +77,6 @@ export class RequirementsComponent implements OnInit {
     if (type === 'area_id') {
       this.getAspects(value);      
     }
-    
   }
 
   async setConfigSearch() {    
@@ -265,7 +264,7 @@ export class RequirementsComponent implements OnInit {
     return this.crud.GetParams({ "orderby": "area_name", "direction": "asc" }, "/area").toPromise().then(res => res.body);
   }
   getAspects(area_id) {
-    return this.crud.GetParams({ "orderby": "area_aspect_name", "direction": "asc", "fields": "area_id", "ops": "eq", "values": area_id }, "/areaaspect")
+    return this.crud.GetParams({ "orderby": "area_aspect_name", "direction": "asc", "fields": "area_id", "ops": "eq", "values": area_id }, "/areaaspect/query")
       .subscribe(res => {
         let aspects = res.body;
         this.configSearch[4].lista = aspects;
