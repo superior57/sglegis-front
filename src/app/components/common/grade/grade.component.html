@@ -11,9 +11,15 @@
               <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap" style="padding: 10px; font-size: 13px">
                 <div fxFlex="33" class="pr-1" *ngFor='let campo of CamposBusca'>
                   <mat-form-field class="full-width" *ngIf="(campo.tipoCampo =='string')">
-                    <input matInput name="campo.nomeCampo" [placeholder]="campo.labelCampo"
-                      [maxLength]="campo.maxLengthCampo" [mask]="campo.maskCampo" upperCase type="text"
-                      [formControl]="buscarForm.controls[campo.nomeCampo]" [readonly]="campo.disabled">
+                    <input matInput 
+                        name="campo.nomeCampo" 
+                        [placeholder]="campo.labelCampo"
+                        [maxLength]="campo.maxLengthCampo" 
+                        [mask]="campo.maskCampo" 
+                        upperCase 
+                        type="text"
+                        [formControl]="buscarForm.controls[campo.nomeCampo]" 
+                        [readonly]="campo.disabled">
                     <button mat-button *ngIf="buscarForm.controls[campo.nomeCampo]" matSuffix mat-icon-button
                       aria-label="Limpar" (click)="buscarForm.controls[campo.nomeCampo].setValue('')" [disabled]="campo.disabled">
                       <mat-icon>close</mat-icon>

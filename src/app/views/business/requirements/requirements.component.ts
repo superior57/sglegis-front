@@ -24,24 +24,20 @@ export class RequirementsComponent implements OnInit {
   configSearch: any = [];
 
   columns = [
-    { Propriedade: 'customer_business_name', Titulo: 'Matriz', Visivel: true, Largura:100 },
     { Propriedade: 'customer_unit_name', Titulo: 'Unidade', Visivel: true, Largura:100 },
-    { Propriedade: 'area_name', Titulo: 'Sis.Gestão', Visivel: true, Largura:100 },
+    { Propriedade: 'customer_business_name', Titulo: 'Matriz', Visivel: true, Largura:100 },
     { Propriedade: 'area_aspect_name', Titulo: 'Aspecto', Visivel: true, Largura:150 },
-    // { Propriedade: 'customer_unit_name', Titulo: 'unit', Visivel: true, Largura:200 },
-    // { Propriedade: 'area_name', Titulo: 'Area', Visivel: true, Largura:100 },
-    // { Propriedade: 'document_item_subject', Titulo: 'Assunto', Visivel: true, Largura:100 },
     { Propriedade: 'document_scope_description', Titulo: 'Âmbito', Visivel: true, Largura:100 },
     { Propriedade: 'document_name', Titulo: 'Documento', Visivel: true, Largura:200 },
-    { Propriedade: 'document_item_number', Titulo: 'Item', Visivel: true, Largura:100 },
     { Propriedade: 'document_date_status', Titulo: 'Data/Status', Visivel: true, Largura:200},    
-    // { Propriedade: 'customer_business_name', Titulo: 'Cliente', Visivel: true, Largura: 150 },
-    // { Propriedade: 'customer_unit_name', Titulo: 'Unidade', Visivel: true, Largura: 150 },
-    { Propriedade: 'audit_conformity_description', Titulo: 'Conformidade', Visivel: true, Largura: 100 },
+    { Propriedade: 'document_item_number', Titulo: 'Item', Visivel: true, Largura:100 },
     { Propriedade: 'audit_practical_order_description', Titulo: 'Ordem Prática', Visivel: true, Largura: 100 },
-    { Propriedade: 'audit_control_action', Titulo: 'Controle', Visivel: true, Largura: 300 },
+    { Propriedade: 'audit_conformity_description', Titulo: 'Conformidade', Visivel: true, Largura: 100 },
     { Propriedade: 'audit_evidnece_compliance', Titulo: 'Evidência', Visivel: true, Largura: 300 },
+    { Propriedade: 'audit_control_action', Titulo: 'Controle', Visivel: true, Largura: 300 },
     { Propriedade: 'audit_date', Titulo: 'Avaliação', Visivel: true, Largura: 100 },
+    { Propriedade: 'unit_aspect_responsible_name', Titulo: 'Responsável', Visivel: true, Largura: 100 },
+    // { Propriedade: 'area_name', Titulo: 'Sis.Gestão', Visivel: true, Largura:100 },
     
   ]
 
@@ -64,7 +60,7 @@ export class RequirementsComponent implements OnInit {
     this.loadConformity();
     this.loadPraticalOrder();
     this.setConfigSearch();
-    this.getAuditRequirements(undefined);
+    this.getAuditRequirements(this.lastSearch);
   }
 
   onFilterValueChange(type: string, value: any) {
