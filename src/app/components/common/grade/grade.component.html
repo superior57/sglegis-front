@@ -97,7 +97,7 @@
 
   <div style="margin-top: 10px;">
     <ngx-datatable class="material fullscreen" 
-      [columnMode]="'standard'" 
+      [columnMode]="'force'" 
       [headerHeight]="50" 
       [footerHeight]=""
       [rowHeight]="'auto'" 
@@ -123,7 +123,11 @@
       </ngx-datatable-row-detail>
 
       <!-- Column Templates -->
-      <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false"
+      <ngx-datatable-column 
+        [width]="50" 
+        [resizeable]="false" 
+        [sortable]="false" 
+        [draggable]="false"
         [canAutoResize]="false" *ngIf="(Expansible)">
         <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
           <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded"

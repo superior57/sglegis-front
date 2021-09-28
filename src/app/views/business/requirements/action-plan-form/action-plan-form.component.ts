@@ -79,11 +79,11 @@ export class ActionPlanFormComponent implements OnInit {
       this.curdService.Save(newActionPlan, true, "/action-plan", null).subscribe(res => {
         this.loader.close();
         this.dialogRef.close("OK");
-        this.snackBar.open("Successfully saved action plan", "", { duration: 3000 });
+        this.snackBar.open("Sucesso ao salvar plano de ação", "", { duration: 3000 });
       }, err => {
         this.loader.close();
         this.dialogRef.close("NOK");
-        this.snackBar.open("Error in saving action plan: " + err, "", { duration: 5000 });
+        this.snackBar.open("Ocorreu um erro: " + err, "", { duration: 5000 });
       })
     })    
   }
@@ -94,7 +94,7 @@ export class ActionPlanFormComponent implements OnInit {
     
     const newActivity = {
       ...activity,
-      deadline: dateFormat(activity.deadline, "DD/MM/YYYY"),
+      deadline: activity.deadline,
       status: 0,
       actionplan_id: this.actionPlan.actionplan_id,
       fake_id: this.activities.length
