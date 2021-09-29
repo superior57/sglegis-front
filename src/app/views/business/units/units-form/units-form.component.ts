@@ -178,7 +178,6 @@ export class unitsFormComponent implements OnInit {
       //this.loader.close();
 
       if (res.status == 200 && res.body.length > 0) {
-        //[{"cep_id":533858,"city_id":9640,"state_id":26,"type":"Rua","street_name":"Rua Bahia (Vl S Pedro)","district_name":"Montanh├úo","cep":9784200,"createdAt":"2021-05-04T01:20:21.000Z","updatedAt":"2021-05-04T01:20:21.000Z"}]
         this.unitForm.controls.customer_unit_address.setValue(res.body[0].street_name);
         
         this.unitForm.controls.customer_unit_uf_id.setValue(res.body[0].state_id);
@@ -246,7 +245,7 @@ export class unitsFormComponent implements OnInit {
     this.crudService.GetParams(undefined, "/state").subscribe(s => {
       if (s.status == 200) {
         this.states = [];
-        this.states = s.body;   
+        this.states = s.body.sort((a, b) => { return a.state_name.localeCompare(b.state_name); });
       }
     });
   }
