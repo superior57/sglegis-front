@@ -128,16 +128,16 @@ export class UsersFormComponent implements OnInit {
     console.log(user);
     
     user.is_disabled = user.is_disabled == 1 ? 0 : 1;
-    this.confirm.confirm("Diable User", (user.is_disabled == 1 ? ("Will you disable this user : ") : ("Will you active this user : ")) + user.user_name).subscribe(result => {
+    this.confirm.confirm("Desabilitar usuário", (user.is_disabled == 1 ? ("Desabilitar usuário ") : ("Ativar usuário ")) + user.user_name + "?").subscribe(result => {
       if (result === true) {
         this.loader.open();
         this.crudService.Save(user, this.data.new, "/users", user.user_id).subscribe(res => {
           this.loader.close();
           this.user.value.is_disabled = user.is_disabled;
-          this.snackBar.open("An user has been disabled successfully", "", { duration: 5000 });
+          this.snackBar.open("Usuário desabilitado com sucesso", "", { duration: 5000 });
         }, err => {
           this.loader.close();
-          this.snackBar.open("An error in disabling user!" + err, "", { duration: 5000 });
+          this.snackBar.open("Ocorreu um erro ao tentar desabilitar o usuário!" + err, "", { duration: 5000 });
         })
       }
     })    
