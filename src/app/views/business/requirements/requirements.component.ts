@@ -29,11 +29,12 @@ export class RequirementsComponent implements OnInit {
     { Propriedade: 'area_name', Titulo: 'Sis.Gestão', Visivel: true, Largura:100 },
     { Propriedade: 'area_aspect_name', Titulo: 'Aspecto', Visivel: true, Largura:150 },
     { Propriedade: 'document_scope_description', Titulo: 'Âmbito', Visivel: true, Largura:100 },
-    { Propriedade: 'document_name', Titulo: 'Documento', Visivel: true, Largura:200 },
+    { Propriedade: 'document_name', Titulo: 'Documento', Visivel: true, Largura: 200 },
+    { Propriedade: 'document_attachment', Titulo: 'Anexo', Imagem: true, Visivel: true, Largura: 100 },
     // { Propriedade: 'document_date_status', Titulo: 'Data/Status', Visivel: true, Largura:200},    
-    { Propriedade: 'document_date_formated', Titulo: 'Item', Visivel: true, Largura: 100 },
-    { Propriedade: 'status_description', Titulo: 'Item', Visivel: true, Largura:150 },
-    { Propriedade: 'document_item_number', Titulo: 'Item', Visivel: true, Largura:100 },
+    { Propriedade: 'document_date_formated', Titulo: 'Data', Visivel: true, Largura: 100 },
+    { Propriedade: 'status_description', Titulo: 'Status', Visivel: true, Largura:150 },
+    { Propriedade: 'document_item_number', Titulo: 'Número', Visivel: true, Largura:100 },
     { Propriedade: 'audit_practical_order_description', Titulo: 'Ordem Prática', Visivel: true, Largura: 100 },
     { Propriedade: 'audit_conformity_description', Titulo: 'Conformidade', Visivel: true, Largura: 100 },
     { Propriedade: 'audit_evidnece_compliance', Titulo: 'Evidência', Visivel: true, Largura: 300 },
@@ -151,6 +152,7 @@ export class RequirementsComponent implements OnInit {
             ...newRow,
             // document_date_status: `${date.format('DD/MM/yyyy')} - ${newRow.status_description}`,
             document_date_formated: date.format('DD/MM/yyyy'),
+            document_attachment: newRow.document_attachments,
             document_name: `${newRow.document_type} - ${ (newRow.document_number) ? newRow.document_number : "S/No"}`,
             audit_practical_order_description: this.getPraticName(newRow.audit_practical_order_id),
             audit_conformity_description: this.getConformityName(newRow.audit_conformity_id),
@@ -269,6 +271,10 @@ export class RequirementsComponent implements OnInit {
         this.configSearch[4].lista = aspects;
         this.syncInit = true;
     })
+}
+
+getAttachments(document_id){
+  return [{'document_src': 'teste'},{'document_src': 'teste2'} ]
   }
 
   getPraticName(id) {

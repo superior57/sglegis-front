@@ -48,7 +48,7 @@ export class DocumentsAttachementFormComponent implements OnInit {
     this.loader.open();
     this.crudService.Save(formData, true, "/document-attachment", null).subscribe(res => {
       this.loader.close();
-      this.snackBar.open("Added an attachment successfully", "", { duration: 3000 });
+      this.snackBar.open("Anexo incluído com sucesso!", "", { duration: 3000 });
       this.dialogRef.close("OK");
     })
   }
