@@ -30,7 +30,9 @@ export class RequirementsComponent implements OnInit {
     { Propriedade: 'area_aspect_name', Titulo: 'Aspecto', Visivel: true, Largura:150 },
     { Propriedade: 'document_scope_description', Titulo: 'Âmbito', Visivel: true, Largura:100 },
     { Propriedade: 'document_name', Titulo: 'Documento', Visivel: true, Largura:200 },
-    { Propriedade: 'document_date_status', Titulo: 'Data/Status', Visivel: true, Largura:200},    
+    // { Propriedade: 'document_date_status', Titulo: 'Data/Status', Visivel: true, Largura:200},    
+    { Propriedade: 'document_date_formated', Titulo: 'Item', Visivel: true, Largura: 100 },
+    { Propriedade: 'status_description', Titulo: 'Item', Visivel: true, Largura:150 },
     { Propriedade: 'document_item_number', Titulo: 'Item', Visivel: true, Largura:100 },
     { Propriedade: 'audit_practical_order_description', Titulo: 'Ordem Prática', Visivel: true, Largura: 100 },
     { Propriedade: 'audit_conformity_description', Titulo: 'Conformidade', Visivel: true, Largura: 100 },
@@ -147,7 +149,8 @@ export class RequirementsComponent implements OnInit {
 
           this.rows.push({
             ...newRow,
-            document_date_status: `${date.format('DD/MM/yyyy')} - ${newRow.status_description}`,
+            // document_date_status: `${date.format('DD/MM/yyyy')} - ${newRow.status_description}`,
+            document_date_formated: date.format('DD/MM/yyyy'),
             document_name: `${newRow.document_type} - ${ (newRow.document_number) ? newRow.document_number : "S/No"}`,
             audit_practical_order_description: this.getPraticName(newRow.audit_practical_order_id),
             audit_conformity_description: this.getConformityName(newRow.audit_conformity_id),
