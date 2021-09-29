@@ -3,3 +3,6 @@
     font-size: 12px;
     width: 500px;
 }
+textarea{
+    text-transform: uppercase;
+}

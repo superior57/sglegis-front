@@ -109,15 +109,15 @@ export class UsersFormComponent implements OnInit {
 
   resetPassword() {
     let user = this.user.value;
-    this.confirm.confirm("Password Reset", "A new password will be sent into " + user.user_email).subscribe(result => {
+    this.confirm.confirm("Criar nova senha", "Uma nova senha será gerada e enviada para " + user.user_email).subscribe(result => {
       if (result === true) {
-        this.loader.open("Sending email");
+        this.loader.open("Enviando email");
         this.crudService.Save(user, this.data.new, "/users/reset-password", user.user_id).subscribe(res => {
           this.loader.close()
-          this.snackBar.open("A new email sent successfully!", "", { duration: 5000 });
+          this.snackBar.open("A nova senha foi enviada por email!", "", { duration: 5000 });
         }, err => {
           this.loader.close();
-          this.snackBar.open("An error in sending email: " + err, "", { duration: 5000 });
+          this.snackBar.open("Ocorreu um erro ao enviar email: " + err, "", { duration: 5000 });
         })
       }
     })
