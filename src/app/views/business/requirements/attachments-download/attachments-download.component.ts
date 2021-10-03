@@ -21,7 +21,8 @@ export class AttachmentsDownloadComponent implements OnInit {
 
   columns2 = [{ prop: 'name', name: 'Nome do documento' }, { prop: 'dt', name: 'Data de upload' }];
 
-  documentAttachments = [  ];
+  documentAttachments = [];
+  auditAttachemnts = [  ];
   currentUser:any;
   roles = roles;
   profile = profile;
@@ -49,34 +50,34 @@ export class AttachmentsDownloadComponent implements OnInit {
 
   getDocumentAttachments(documentId) {
     if (documentId)
-    this.crudService.GetParams({ "orderby": "createdAt", "direction": "asc" }, "/document-attachment/attachments/" + documentId).subscribe(res => {
-      if (res.status == 200) {
-        this.documentAttachments = [];
-        this.documentAttachments = res.body.map(att => {
-          const date = moment(att.createdAt);          
-          return {
-            ...att,
-            date: date.format('DD/MM/yyyy')
-          }
-        });                
-      }
-    });
+      this.crudService.GetParams({ "orderby": "createdAt", "direction": "asc" }, "/document-attachment/attachments/" + documentId).subscribe(res => {
+        if (res.status == 200) {
+          this.documentAttachments = [];
+          this.documentAttachments = res.body.map(att => {
+            const date = moment(att.createdAt);          
+            return {
+              ...att,
+              date: date.format('DD/MM/yyyy')
+            }
+          });                
+        }
+      });
   }
 
   getAuditAttachments(auditId) {
     if (auditId)
-    this.crudService.GetParams({ "orderby": "createdAt", "direction": "asc" }, "/audit-attachment/attachments/" + auditId).subscribe(res => {
-      if (res.status == 200) {
-        this.documentAttachments = [];
-        this.documentAttachments = res.body.map(att => {
-          const date = moment(att.createdAt);          
-          return {
-            ...att,
-            date: date.format('DD/MM/yyyy')
-          }
-        });                
-      }
-    });
+      this.crudService.GetParams({ "orderby": "createdAt", "direction": "asc" }, "/audit-attachment/attachments/" + auditId).subscribe(res => {
+        if (res.status == 200) {
+          this.auditAttachemnts = [];
+          this.auditAttachemnts = res.body.map(att => {
+            const date = moment(att.createdAt);          
+            return {
+              ...att,
+              date: date.format('DD/MM/yyyy')
+            }
+          });                
+        }
+      });
   }
 
   removeAttachment(attachment) {
