@@ -64,7 +64,7 @@ export class RequirementsComponent implements OnInit {
     this.loadConformity();
     this.loadPraticalOrder();
     this.setConfigSearch();
-    this.getAuditRequirements(this.lastSearch);
+    this.getAuditRequirements(undefined);
   }
 
   onFilterValueChange(type: string, value: any) {
@@ -105,14 +105,12 @@ export class RequirementsComponent implements OnInit {
       aux[1].fieldValue = this.currentUser.customer_id; 
     }
 
-
     this.configSearch = aux;
     this.syncInit = true;
   }
 
 
   openForm(info: any = {}) {   
-
     let dialogRef: MatDialogRef<any> = this.dialog.open(AuditFormComponent, {
       width: '900px',
       disableClose: true,
@@ -135,6 +133,7 @@ export class RequirementsComponent implements OnInit {
         customer_id: this.currentUser.customer_id
       }
     }
+    this.lastSearch = parameter;
     this.crud.GetParams(parameter, `/requirements`).subscribe(res => {
       this.rows = [];
       const newArr = res.body;
@@ -153,14 +152,14 @@ export class RequirementsComponent implements OnInit {
             ...newRow,
             // document_date_status: `${date.format('DD/MM/yyyy')} - ${newRow.status_description}`,
             document_date_formated: date.format('DD/MM/yyyy'),
-            document_name: `${newRow.document_type} - ${ (newRow.document_number) ? newRow.document_number : "S/No"}`,
+            document_name: `${newRow.document_type} - ${(newRow.document_number) ? newRow.document_number : "S/No"}`,
             audit_practical_order_description: this.getPraticName(newRow.audit_practical_order_id),
             audit_conformity_description: this.getConformityName(newRow.audit_conformity_id),
             audit_date: audit_date,
           });
         }
       });
-    })
+    });
   }
 
 
@@ -186,7 +185,7 @@ export class RequirementsComponent implements OnInit {
     let dialogRef: MatDialogRef<any> = this.dialog.open(AttachmentsDownloadComponent, {
       width: dialog.medium,
       disableClose: false,
-      data: { title: "", payload: { 
+      data: { title: "Arquivos anexo", payload: { 
         ...registro,
         unit_id: registro.customer_unit_id,
         item_area_aspect_id: registro.item_area_aspect_id,
