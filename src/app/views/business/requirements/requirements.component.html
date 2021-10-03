@@ -18,6 +18,8 @@
   (PesquisarRegistro)="getAuditRequirements($event.parametro)" 
   (actionButtonEvent)="openForm('')" 
   (ActionRegistro)="handleActionPlan($event.registro)"
+  [BtnAttachment]="true"
+  (AttachementRegistro)="handleAttachmentDownload($event.registro)"
   (CheckRegistro)="handleCheck($event.registro, $event.status)"
   [MostrarBarraBusca]="true" 
   [syncOnInit]="syncInit"

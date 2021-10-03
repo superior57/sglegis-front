@@ -6,6 +6,7 @@ import { MatDialogRef, MatDialog, MatOption } from '@angular/material';
 import { PopupImagemComponent } from '../popup-imagem/popup-imagem.component';
 import { AppInformationService } from '../../../../app/services/dialogs/app-information/app-information.service';
 import { CampoBusca } from 'app/models/base/negocio/CampoBusca';
+import { AttachmentsDownloadComponent } from 'app/views/business/requirements/attachments-download/attachments-download.component';
 
 @Component({
   selector: 'app-grade',
@@ -15,6 +16,7 @@ import { CampoBusca } from 'app/models/base/negocio/CampoBusca';
 export class GradeComponent implements OnInit {
   @Input() Colunas: Array<Coluna>;
   @Input() BtnResponsible: Boolean;
+  @Input() BtnAttachment: Boolean = false;
   @Input() BtnAction: Boolean;
   @Input() BtnEditar: Boolean;
   @Input() BtnDeletar: Boolean;
@@ -38,6 +40,7 @@ export class GradeComponent implements OnInit {
   @Output() ExcluirRegistro: EventEmitter<any> = new EventEmitter();
   @Output() ResponsibleRegistro: EventEmitter<any> = new EventEmitter();
   @Output() ActionRegistro: EventEmitter<any> = new EventEmitter();
+  @Output() AttachementRegistro: EventEmitter<any> = new EventEmitter();
   @Output() CheckRegistro: EventEmitter<any> = new EventEmitter();
   @Output() filterValueChange: EventEmitter<any> = new EventEmitter();
 
@@ -137,6 +140,10 @@ export class GradeComponent implements OnInit {
     this.ActionRegistro.emit({ registro: registro });
   }
 
+  onAttachment(registro) {
+    this.AttachementRegistro.emit({ registro: registro });
+  }
+
   onCheck(registro: any, event) {    
     this.CheckRegistro.emit({ registro: registro, status: event.checked })
   }
@@ -198,7 +205,7 @@ export class GradeComponent implements OnInit {
     if ((imagem === undefined) || (imagem === "")) {
       this.mensagem.information("Informações", "Não foi feito registro fotográfico.");
     } else {
-      let dialogRef: MatDialogRef<any> = this.dialog.open(PopupImagemComponent, {
+      let dialogRef: MatDialogRef<any> = this.dialog.open(AttachmentsDownloadComponent, {
         width: '95%;',
         disableClose: true,
         data: { title: "Imagem", payload: imagem }

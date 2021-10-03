@@ -10,6 +10,7 @@ import { EventEmitter } from 'events';
 import * as moment from 'moment';
 import { DocumentsFormComponent } from '../documents/documents-form/documents-form.component';
 import { ActionPlanFormComponent } from './action-plan-form/action-plan-form.component';
+import { AttachmentsDownloadComponent } from './attachments-download/attachments-download.component';
 import { AuditFormComponent } from './audits-form/audits-form.component';
 
 @Component({
@@ -30,7 +31,7 @@ export class RequirementsComponent implements OnInit {
     { Propriedade: 'area_aspect_name', Titulo: 'Aspecto', Visivel: true, Largura:150 },
     { Propriedade: 'document_scope_description', Titulo: 'Âmbito', Visivel: true, Largura:100 },
     { Propriedade: 'document_name', Titulo: 'Documento', Visivel: true, Largura: 200 },
-    { Propriedade: 'document_attachment', Titulo: 'Anexo', Imagem: true, Visivel: true, Largura: 100 },
+    // { Propriedade: 'document_attachment', Titulo: 'Anexo', Visivel: true, Largura: 100 },
     // { Propriedade: 'document_date_status', Titulo: 'Data/Status', Visivel: true, Largura:200},    
     { Propriedade: 'document_date_formated', Titulo: 'Data', Visivel: true, Largura: 100 },
     { Propriedade: 'status_description', Titulo: 'Status', Visivel: true, Largura:150 },
@@ -152,7 +153,6 @@ export class RequirementsComponent implements OnInit {
             ...newRow,
             // document_date_status: `${date.format('DD/MM/yyyy')} - ${newRow.status_description}`,
             document_date_formated: date.format('DD/MM/yyyy'),
-            document_attachment: newRow.document_attachments,
             document_name: `${newRow.document_type} - ${ (newRow.document_number) ? newRow.document_number : "S/No"}`,
             audit_practical_order_description: this.getPraticName(newRow.audit_practical_order_id),
             audit_conformity_description: this.getConformityName(newRow.audit_conformity_id),
@@ -169,6 +169,23 @@ export class RequirementsComponent implements OnInit {
     let dialogRef: MatDialogRef<any> = this.dialog.open(ActionPlanFormComponent, {
       width: dialog.medium,
       disableClose: true,
+      data: { title: "", payload: { 
+        ...registro,
+        unit_id: registro.customer_unit_id,
+        item_area_aspect_id: registro.item_area_aspect_id,
+        user_id: this.currentUser.id,
+      }, new: true }
+    });
+    
+    dialogRef.afterClosed().subscribe(res => {
+      
+    })
+  }
+
+  handleAttachmentDownload(registro: any) {     
+    let dialogRef: MatDialogRef<any> = this.dialog.open(AttachmentsDownloadComponent, {
+      width: dialog.medium,
+      disableClose: false,
       data: { title: "", payload: { 
         ...registro,
         unit_id: registro.customer_unit_id,
