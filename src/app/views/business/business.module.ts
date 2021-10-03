@@ -61,6 +61,7 @@ import { DocumentsAttachementFormComponent } from './documents/documents-attache
 import { unitsResponsibleFormComponent } from './units/units-responsible-form/units-responsible-form.component';
 import { ActionPlanFormComponent } from './requirements/action-plan-form/action-plan-form.component';
 import { AttachmentsDownloadComponent } from './requirements/attachments-download/attachments-download.component';
+import { AuditsAttachmentFormComponent } from './requirements/audits-attachment-form/audits-attachment-form.component';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: "right",
@@ -121,12 +122,12 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     DocumentItemComponent,
     RequirementsComponent,
     AuditFormComponent,
-    UsersComponent, UsersFormComponent, FileFieldComponent, DocumentsAttachementFormComponent, unitsResponsibleFormComponent, ActionPlanFormComponent, AttachmentsDownloadComponent
+    UsersComponent, UsersFormComponent, FileFieldComponent, DocumentsAttachementFormComponent, unitsResponsibleFormComponent, ActionPlanFormComponent, AttachmentsDownloadComponent, AuditsAttachmentFormComponent
   ],
   exports: [MatAutocompleteModule],
   entryComponents: [CustomerGroupFormComponent,
     CustomersFormsComponent, unitsFormComponent, AreasFormComponent, AspectsFormComponent, DocumentsFormComponent, DocumentsAttachementFormComponent,
-    DocumentItemComponent, AuditFormComponent, UsersFormComponent, unitsResponsibleFormComponent, ActionPlanFormComponent,AttachmentsDownloadComponent
+    DocumentItemComponent, AuditFormComponent, UsersFormComponent, unitsResponsibleFormComponent, ActionPlanFormComponent,AttachmentsDownloadComponent, AuditsAttachmentFormComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }]
