@@ -12,6 +12,7 @@
               <mat-form-field class="full-width">
                 <input
                   matInput
+                  upperCase
                   placeholder="Nome completo"
                   [formControl]="responsibleForm.controls['unit_aspect_responsible_name']"
                 >
@@ -21,6 +22,7 @@
               <mat-form-field class="full-width">
                 <input
                   matInput
+                  upperCase
                   placeholder="E-mail"
                   [formControl]="responsibleForm.controls['unit_aspect_responsible_email']"
                 >
@@ -55,7 +57,7 @@
                           </div>
         
                           <div fxFlex="50" class="pr-1" *ngFor="let aspect of areaWithAspect.aspects">
-                            <mat-checkbox color="primary" [checked]="isCheckedAspect(aspect)" (change)="toggleAspect(aspect, $event)">
+                            <mat-checkbox color="primary" [checked]="aspect.checked=='S'" (change)="toggleAspect(aspect, $event)">
                               {{aspect.area_aspect_name}}
                             </mat-checkbox>
                           </div>

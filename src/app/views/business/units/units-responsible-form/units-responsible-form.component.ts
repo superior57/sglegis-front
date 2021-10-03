@@ -71,7 +71,7 @@ export class unitsResponsibleFormComponent implements OnInit {
         this.responsibles = res.body.map(responsible => {
           return {
             ...responsible,
-            tooltip: responsible.aspects.map(as => as.area_aspect_name).join(", "),
+            tooltip: responsible.aspects.map(as => `${as.area_aspect_name}`).join(", "),
           }
         });        
       }      
@@ -81,12 +81,14 @@ export class unitsResponsibleFormComponent implements OnInit {
 
   toggleAll(arearWithAspect, evento) {
     for (let i = 0; i < arearWithAspect.aspects.length; i++) {
-      arearWithAspect.aspects[i].checked = (evento.checked) ? "S" : "N";
+      //arearWithAspect.aspects[i].checked = (evento.checked) ? "S" : "N";
+      this.toggle(arearWithAspect.aspects[i], evento);
     }
   }
 
   toggle(aspect, evento) {
     aspect.checked = (evento.checked) ? "S" : "N";
+    this.toggleAspect(aspect, evento);
   }
 
   addResponsible() {
