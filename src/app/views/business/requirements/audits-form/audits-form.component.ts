@@ -7,6 +7,15 @@ import { AppLoaderService } from 'app/services/dialogs/app-loader/app-loader.ser
 import { CRUDService } from 'app/services/negocio/CRUDService/CRUDService';
 import { CustomersFormsComponent } from '../../customers/customers-forms/customers-forms.component';
 
+import { AuditsAttachmentFormComponent } from '../audits-attachment-form/audits-attachment-form.component';
+import { dialog } from 'app/models/size/size';
+import * as moment from "moment";
+import { roles } from 'app/models/auth/roles';
+import { AuthGuard } from 'app/services/auth/auth.guard';
+import { profile } from 'app/models/auth/profile.types';
+
+import { environment } from "environments/environment";
+
 @Component({
   selector: 'app-audits-form',
   templateUrl: './audits-form.component.html',
@@ -14,12 +23,21 @@ import { CustomersFormsComponent } from '../../customers/customers-forms/custome
 })
 export class AuditFormComponent implements OnInit {
   document_items: any[];
+  audit_items: any[];
   notify: Boolean = false;
-  public audit: FormGroup;
+  public auditForm: FormGroup;
   public historicals: any[] = [];
   public featuredHistory = null;
   public conforms = []
   public pratics = []
+  showAttachment: Boolean = false;
+
+  columns2 = [{ prop: 'name', name: 'Nome do documento' }, { prop: 'dt', name: 'Data de upload' }];
+
+  auditAttachments = [];
+  currentUser:any;
+  roles = roles;
+  profile = profile;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   public dialogRef: MatDialogRef<CustomersFormsComponent>,
@@ -42,7 +60,7 @@ export class AuditFormComponent implements OnInit {
 
   prepareScreen(record: any) {
     
-    this.audit = new FormGroup({
+    this.auditForm = new FormGroup({
       audit_id: new FormControl(record.audit_id),
       audit_practical_order: new FormControl('', [Validators.required]),
       audit_conformity: new FormControl('', [Validators.required]),
@@ -57,8 +75,9 @@ export class AuditFormComponent implements OnInit {
         res.body.splice(0, 1);
         this.historicals = res.body;
 
-        this.audit = new FormGroup({
-          audit_id: new FormControl(this.featuredHistory.audit_id  || 0),
+        this.auditForm = new FormGroup({
+          audit_id: new FormControl(this.featuredHistory.audit_id || 0),
+          audit_item_id: new FormControl(this.featuredHistory.audit_item_id || 0),
           audit_practical_order: new FormControl(this.featuredHistory.audit_practical_order || '', [Validators.required]),
           audit_conformity: new FormControl(this.featuredHistory.audit_conformity || '', [Validators.required]),
           audit_evidnece_compliance: new FormControl(this.featuredHistory.audit_evidnece_compliance || '', [Validators.required]),
@@ -66,24 +85,31 @@ export class AuditFormComponent implements OnInit {
         })
       }
     });
-    this.initItems(record);    
+    this.initItems(record);
+    
+    if (record && record.length === 1) {
+      this.showAttachment = true;
+      this.getAttachments(record);
+    }
   }
 
   initItems(record: any) {
     const documentItemIds = [];
+
     this.document_items = [];
+
     record.forEach(r => {      
       if (!documentItemIds.includes(r.document_item_id)) {        
         documentItemIds.push(r.document_item_id);
         this.document_items.push(r);
       }
     });   
-  }
+  };
 
   saveAudit() {
     const datas = this.data.payload;
     const user = this.data.user;
-    let audit = this.audit.value;
+    let audit = this.auditForm.value;
     this.loader.open();
     datas.forEach(d => {
       let newAudit = {
@@ -206,5 +232,93 @@ export class AuditFormComponent implements OnInit {
   loadConformity() {
     return this.crudService.GetParams(undefined, "/conformity").toPromise().then(res => res.body);
   }
+
+  //#region attachment stuff
+
+  newAttachment() {
+    let dialogRef: MatDialogRef<any> = this.dialog.open(AuditsAttachmentFormComponent, {
+      width: dialog.small,
+      disableClose: true,
+      data: { title: "Anexar PDF", payload: this.auditForm.value, new: true }
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      this.getAttachments(this.data.payload);
+      return;
+    })
+  }
+
+  getAttachments(record) {
+    if (record && record.length > 0)
+    record.forEach(audit => {
+      if (audit.audit_id)
+        this.crudService.GetParams({ "orderby": "createdAt", "direction": "asc" }, "/audit-attachment/attachments/" + audit.audit_id).subscribe(res => {
+          if (res.status == 200) {
+            this.auditAttachments = [];
+            this.auditAttachments = res.body.map(att => {
+              const date = moment(att.createdAt);          
+              return {
+                ...att,
+                date: date.format('DD/MM/yyyy')
+              }
+            });                
+          }
+        });
+    });
+  }
+
+  removeAttachment(attachment) {
+    let attachmentData = attachment.audit_attachment_id;
+    
+    this.confirm.confirm("Apagar anexo", "Tem certeza que deseja remover o documento anexo? " + attachmentData).subscribe(result => {
+      if (result === true) {
+        this.loader.open();
+        this.crudService.DeleteParams(attachmentData, "/audit-attachment").subscribe(res => {
+          this.snackBar.open("O anexo foi removido com sucesso!", "", { duration: 3000 });
+          this.getAttachments(this.data.payload);
+          this.loader.close();
+        }, err => {
+          this.loader.close();
+          this.snackBar.open("Erro ao apagar anexo: " + err, "", { duration: 5000 });
+        })
+      }
+    })
+  }
+
+  deleteDocument() {
+    let document = this.auditForm.value;
+    
+    this.confirm.confirm("Delete Document", "Are you sure to delete a Document? " + document.document_id).subscribe(result => {
+      if (result === true) {
+        this.loader.open();
+        this.crudService.DeleteParams(document.document_id, "/document").subscribe(res => {
+          this.snackBar.open("A Document has been deleted successfully!", "", { duration: 3000 });
+          this.loader.close();
+          this.dialogRef.close("OK");
+        }, err => {
+          this.loader.close();
+          this.snackBar.open("Error in deleting document: " + err, "", { duration: 5000 });
+        })
+      }
+    })
+  }
+
+  downloadAttachment(data) {
+    window.open(`${environment.fileURL}/${data.attachment_src}`);
+  }
+
+  convertData (strData) {
+    if (strData.includes('-'))
+      return strData;
+    if (strData.includes('/'))
+      strData = strData.replaceAll('/', '');
+    let dia = strData.substring(0, 2);
+    let mes = strData.substring(2, 4);
+    let ano = strData.substring(4, 8);
+    const newData = `${ano}-${mes}-${dia}`
+    return newData;
+}
+
+  //#endregion
 
 }

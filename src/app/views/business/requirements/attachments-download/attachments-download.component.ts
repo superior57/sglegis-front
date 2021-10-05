@@ -45,7 +45,6 @@ export class AttachmentsDownloadComponent implements OnInit {
 
   prepareScreen(record) {
     this.getDocumentAttachments(record.document_id);
-    this.getAuditAttachments(record.audit_id);
   }
 
   getDocumentAttachments(documentId) {
@@ -64,35 +63,19 @@ export class AttachmentsDownloadComponent implements OnInit {
       });
   }
 
-  getAuditAttachments(auditId) {
-    if (auditId)
-      this.crudService.GetParams({ "orderby": "createdAt", "direction": "asc" }, "/audit-attachment/attachments/" + auditId).subscribe(res => {
-        if (res.status == 200) {
-          this.auditAttachemnts = [];
-          this.auditAttachemnts = res.body.map(att => {
-            const date = moment(att.createdAt);          
-            return {
-              ...att,
-              date: date.format('DD/MM/yyyy')
-            }
-          });                
-        }
-      });
-  }
-
   removeAttachment(attachment) {
     let attachmentData = attachment.attachment_id;
     
-    this.confirm.confirm("Delete Attachment", "Are you sure to delete an Attachment? " + attachmentData).subscribe(result => {
+    this.confirm.confirm("Apagar anexo", "Tem certeza que deseja remover o anexo? " + attachmentData).subscribe(result => {
       if (result === true) {
         this.loader.open();
         this.crudService.DeleteParams(attachmentData, "/document-attachment").subscribe(res => {
-          this.snackBar.open("An attachment has been deleted successfully!", "", { duration: 3000 });
+          this.snackBar.open("O documento anexado foi removido com sucesso!", "", { duration: 3000 });
           this.getDocumentAttachments(this.documentForm.value.document_id);
           this.loader.close();
         }, err => {
           this.loader.close();
-          this.snackBar.open("Error in deleting attachment: " + err, "", { duration: 5000 });
+          this.snackBar.open("Erro ao remover anexo: " + err, "", { duration: 5000 });
         })
       }
     })
