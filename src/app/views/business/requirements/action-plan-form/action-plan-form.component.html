@@ -9,7 +9,7 @@
       <div fxFlex="100" class="pr-1">
         <mat-form-field class="full-width">
           <textarea
-            matInput placeholder="Atividade *" [formControl]="activity.controls['activity']"
+            matInput placeholder="Atividade *" upperCase [formControl]="activity.controls['activity']"
           ></textarea>
         </mat-form-field>
       </div>
@@ -17,7 +17,7 @@
       <div fxFlex="50" class="pr-1">
         <mat-form-field class="full-width">
           <input 
-            matInput placeholder="Responsável pela execução *" [formControl]="activity.controls['responsible']"
+            matInput placeholder="Responsável pela execução *" upperCase [formControl]="activity.controls['responsible']"
           />
         </mat-form-field>
       </div>
@@ -25,7 +25,7 @@
       <div fxFlex="50" class="pr-1">
         <mat-form-field class="full-width">
           <input 
-            matInput placeholder="E-mail do responsável *" [formControl]="activity.controls['email']"
+            matInput placeholder="E-mail do responsável *" upperCase [formControl]="activity.controls['email']"
           />
         </mat-form-field>
       </div>

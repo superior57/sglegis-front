@@ -103,10 +103,10 @@ export class DocumentItemComponent implements OnInit {
             o.area_aspect_id = this.areasWithAspects[i].aspects[j].area_aspect_id;
             o.document_item_id = document_item_id;
             let resp = await this.crudService.Save(o, true, `/documentitem/${document_item_id}/aspects`, "0").toPromise();
-            console.log("res ins:" + resp);
+            // console.log("res ins:" + resp);
           } else {
             let resp = await this.crudService.DeleteParams(this.areasWithAspects[i].aspects[j].item_area_aspect_id, `/documentitem/${document_item_id}/aspects`).toPromise();
-            console.log("res del:"+ resp);
+            // console.log("res del:"+ resp);
           }
         }
       }

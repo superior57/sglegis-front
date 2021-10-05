@@ -54,7 +54,7 @@
             <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
     
               <div fxFlex="100" class="mt-1">            
-                <button mat-raised-button color="primary" type="button" (click)="newAttachment()">Anexar documento</button>
+                <button mat-raised-button color="primary" type="button" [disabled]="showAttachment === false" (click)="newAttachment()">Anexar documento</button>
                 <span fxFlex></span>
               </div>
               

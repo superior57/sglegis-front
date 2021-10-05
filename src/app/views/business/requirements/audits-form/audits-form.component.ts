@@ -88,7 +88,8 @@ export class AuditFormComponent implements OnInit {
     this.initItems(record);
     
     if (record && record.length === 1) {
-      this.showAttachment = true;
+      if (record[0].audit_id)
+        this.showAttachment = true;
       this.getAttachments(record);
     }
   }

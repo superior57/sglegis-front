@@ -78,10 +78,14 @@ export class unitsResponsibleFormComponent implements OnInit {
     })
   }
 
+  unToggleAll() {
+    this.areasWithAspects.forEach(area => {
+      this.toggleAll(area, { checked: false });
+    });
+  }
 
   toggleAll(arearWithAspect, evento) {
     for (let i = 0; i < arearWithAspect.aspects.length; i++) {
-      //arearWithAspect.aspects[i].checked = (evento.checked) ? "S" : "N";
       this.toggle(arearWithAspect.aspects[i], evento);
     }
   }
@@ -102,7 +106,8 @@ export class unitsResponsibleFormComponent implements OnInit {
       tooltip: this.selectedAspects.map(aspect => aspect.area_aspect_name).join(', '),
       isNew: true
     }];    
-    this.responsibleForm.reset();    
+    this.responsibleForm.reset();
+    this.unToggleAll();
     this.selectedAspects = [];
     this.aspectInvalid = true;
   }
@@ -137,12 +142,12 @@ export class unitsResponsibleFormComponent implements OnInit {
       this.saveResponsible(this.data.payload.customer_unit_id).then(async () => {
         await this.deleteResponsibles();
         this.loader.close();
-        this.snackBar.open("Recorded Responsibles data successfully", "", { duration: 3000 });
-        this.dialogRef.close();   
+        this.snackBar.open("Responsáveis gravados com sucesso", "", { duration: 3000 });
+        this.dialogRef.close();
       })
     } catch (error) {
       this.loader.close();
-      this.snackBar.open("Error in recording Responsible: "+ error, "", { duration: 5000 })      
+      this.snackBar.open("Erro ao gravar responsáveis: "+ error, "", { duration: 5000 })      
     }
   }
 
