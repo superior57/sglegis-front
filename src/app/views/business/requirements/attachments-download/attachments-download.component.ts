@@ -45,7 +45,6 @@ export class AttachmentsDownloadComponent implements OnInit {
 
   prepareScreen(record) {
     this.getDocumentAttachments(record.document_id);
-    this.getAuditAttachments(record.audit_id);
   }
 
   getDocumentAttachments(documentId) {
@@ -54,22 +53,6 @@ export class AttachmentsDownloadComponent implements OnInit {
         if (res.status == 200) {
           this.documentAttachments = [];
           this.documentAttachments = res.body.map(att => {
-            const date = moment(att.createdAt);          
-            return {
-              ...att,
-              date: date.format('DD/MM/yyyy')
-            }
-          });                
-        }
-      });
-  }
-
-  getAuditAttachments(auditId) {
-    if (auditId)
-      this.crudService.GetParams({ "orderby": "createdAt", "direction": "asc" }, "/audit-attachment/attachments/" + auditId).subscribe(res => {
-        if (res.status == 200) {
-          this.auditAttachemnts = [];
-          this.auditAttachemnts = res.body.map(att => {
             const date = moment(att.createdAt);          
             return {
               ...att,
