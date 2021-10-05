@@ -30,6 +30,7 @@ export class AuditFormComponent implements OnInit {
   public featuredHistory = null;
   public conforms = []
   public pratics = []
+  showAttachment: Boolean = false;
 
   columns2 = [{ prop: 'name', name: 'Nome do documento' }, { prop: 'dt', name: 'Data de upload' }];
 
@@ -84,8 +85,12 @@ export class AuditFormComponent implements OnInit {
         })
       }
     });
-    this.initItems(record);    
-    this.getAttachments(record);
+    this.initItems(record);
+    
+    if (record && record.length === 1) {
+      this.showAttachment = true;
+      this.getAttachments(record);
+    }
   }
 
   initItems(record: any) {
