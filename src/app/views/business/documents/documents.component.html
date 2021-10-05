@@ -10,5 +10,8 @@
   (IncluirRegistro)="openForm('', true)"
   (EditarRegistro)="openForm($event.registro, false)"
   (PesquisarRegistro)="getDocuments($event.parametro)"  
-  [MostrarBarraBusca]="true">  
+  [MostrarBarraBusca]="true"
+  [syncOnInit]="syncInit"
+  (filterValueChange)="onFilterValueChange($event.type, $event.value)"
+  >  
 </app-grade>

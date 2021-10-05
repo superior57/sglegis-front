@@ -119,7 +119,7 @@ export class DocumentsFormComponent implements OnInit {
   showStates() {
     this.showState = true;
     this.documentForm.controls.document_state_id.setValidators([Validators.required]);
-    this.crudService.GetParams({ "orderby": "state_name" }, "/state").subscribe(res => {
+    this.crudService.GetParams({ "orderby": "state_name", "direction": "asc" }, "/state").subscribe(res => {
       if (res.status == 200) {
         this.states = [];
         this.states = res.body;

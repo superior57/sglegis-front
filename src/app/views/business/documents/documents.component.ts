@@ -17,54 +17,24 @@ export class DocumentsComponent implements OnInit  {
 
   lastSearch: any;
   rows = [];
+  configSearch: any = [];
   
   columns = [
-    // {
-    //   Propriedade: 'document_id',
-    //   Titulo: 'Id. Documento',
-    //   Visivel: false,
-    //   Largura: 20
-    // },
-    {
-      Propriedade: 'concat_type_number',
-      Titulo: 'Documento',
-      Visivel: true,
-      Largura:100
-    },    
-    {
-      Propriedade: 'document_date',
-      Titulo: 'Data',
-      Visivel: true,
-      Largura: 80,
-      Tipo: "DATA"
-    },
-    {
-      Propriedade: 'document_scope_description',
-      Titulo: 'Âmbito',
-      Visivel: true,
-      Largura:10
-    },
-    {
-      Propriedade: 'document_summary',
-      Titulo: 'Ementa',
-      Visivel: true,
-      Largura: 300
-    },
-    {
-      Propriedade: 'status_description',
-      Titulo: 'Status',
-      Visivel: true,
-      Largura:10
-    },
-   
+    { Propriedade: 'concat_type_number',Titulo: 'Documento',Visivel: true,Largura:100 },    
+    { Propriedade: 'document_date',Titulo: 'Data',Visivel: true,Largura: 80,Tipo: "DATA" },
+    { Propriedade: 'document_scope_description',Titulo: 'Âmbito',Visivel: true,Largura:10 },
+    { Propriedade: 'document_summary',Titulo: 'Ementa',Visivel: true,Largura: 300 },
+    { Propriedade: 'status_description',Titulo: 'Status',Visivel: true,Largura:10 },
   ]
-
-  configSearch = [
-    new CampoBusca("filter", "Grupo", 50, "", "string", null, null, null)
-  ];
 
   profile = profile;
   currentUser: any = {};
+  syncInit = false;
+
+  showState: boolean = false;
+  showCity: boolean = false;
+  states = [];
+  cities = [];
 
   constructor(
     private crud: CRUDService,
@@ -72,11 +42,105 @@ export class DocumentsComponent implements OnInit  {
     private snackBar: MatSnackBar,
     private loader: AppLoaderService,    
     private auth: AuthGuard,
+    private crudService: CRUDService,
   ) { }
 
   prepareScreen() {    
-    this.currentUser = this.auth.getUser();
+    this.setConfigSearch();
     this.getDocuments(undefined);    
+  }
+
+  onFilterValueChange(type: string, value: any) {
+    if (type === 'document_scope_id') {
+      this.hideCity();
+      this.showStates();
+    }
+
+    if (type === 'state_id') {
+      this.showCities(value);
+    }
+
+    // this.hideCity();
+    // this.hideState();
+  }
+
+  hideState() {
+    this.showState = false;
+    this.states = [];
+  }
+
+  hideCity() {
+    this.showCity = false;
+    this.cities = [];
+  }
+
+  showStates() {
+    this.showState = true;
+
+    this.crudService.GetParams({ "orderby": "state_name", "direction": "asc" }, "/state").subscribe(res => {
+      if (res.status == 200) {
+        let states = [];
+        states = res.body.map(s => {
+          return{
+            ...s,
+            document_state_id: s.state_id,
+            document_state_name: s.state_name,
+          };
+        });
+
+        this.configSearch[1].lista = states;
+        this.syncInit = true;
+      }
+    });
+  };
+
+  showCities(stateId) {
+    this.showCity = true;
+
+    if (stateId){
+      let p: any = new Object();
+      p.orderby = "city_name";
+      p.direction = "asc";
+      p.state_id = stateId;
+      if (this.showCity) {
+        this.crudService.GetParams(p, "/city").subscribe(res => {
+          if (res.status == 200) {
+            let cities = [];
+            const newArr = res.body;
+            newArr.forEach(c => {
+              this.cities.push({
+                ...c,
+                document_state_id: c.state_id,
+                document_state_name: c.state_name,
+
+                document_city_id: c.city_id,
+                document_city_name: c.city_name
+              })
+            });
+
+            this.configSearch[2].lista = cities;
+            this.syncInit = true;
+          }
+        });
+      }
+    };
+  }
+
+  async setConfigSearch() {
+    let scopes = await this.getAuditRequirementscopes();
+
+    let aux = [
+      new CampoBusca("document_scope_id", "Âmbito", 50, "", "LIST", scopes, "document_scope_description", "document_scope_id"),
+      new CampoBusca("state_id", "Estado", 50, "", "LIST", [], "state_name", "state_id"),
+      new CampoBusca("city_id", "Cidade", 50, "", "LIST", [], "city_name", "city_id"),
+
+      new CampoBusca("document_summary", "Ementa", 50, "", "string", null, null, null),
+      new CampoBusca("document_type", "Tipo", 50, "", "string", null, null, null),
+      new CampoBusca("document_number", "Número", 50, "", "string", null, null, null),
+    ];
+
+    this.configSearch = aux;
+    this.syncInit = true;
   }
 
   openForm(info: any = {}, newRercord: Boolean) {
@@ -96,15 +160,22 @@ export class DocumentsComponent implements OnInit  {
     });
   }
   
-  getDocuments(parameter: any) {        
-    this.crud.GetParams(undefined, "/document").subscribe(res => {
+  getDocuments(parameter: any) {
+    this.lastSearch = parameter;
+
+    this.crud.GetParams(parameter, "/document").subscribe(res => {
       this.rows = [];
       this.rows = res.body;
     })
   }
 
   ngOnInit() {
+    this.currentUser = this.auth.getUser();
     this.prepareScreen();
-  }  
+  }
+  
+  getAuditRequirementscopes() {
+    return this.crud.GetParams(undefined, "/documentscope").toPromise().then(res => res.body);
+  }
   
 }
