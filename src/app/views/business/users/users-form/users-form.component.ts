@@ -50,6 +50,10 @@ export class UsersFormComponent implements OnInit {
     
     if (this.user.value.user_role !== roles.admin) {
       this.user.controls.customer_id.setValidators([Validators.required]);
+      this.getCustomers(this.currentUser.customer_id);
+    }
+    else {
+      this.getCustomers(undefined);
     }
 
     this.user.controls.user_role.valueChanges.subscribe(res => {      
@@ -61,19 +65,23 @@ export class UsersFormComponent implements OnInit {
       this.user.controls.customer_id.updateValueAndValidity();      
     })
     
-    this.getCustomers();
   }
 
-  getCustomers() {
-    const params: [CampoBusca] = [
-      new CampoBusca("customers", "Customers", 50, "", "string", null, null, null)
-    ]
+  getCustomers(customer_id) {
+    let p: any = new Object();
+    p.orderby = "customer_business_name";
+    p.direction = "asc";
 
-    this.crudService.GetParamsSearch(params, "/customer").subscribe(res => {     
+    if (customer_id) {
+      p.fields = "customer_id";
+      p.ops = "eq";
+      p.values = customer_id;
+    }
+    this.crudService.GetParams(p, "/customer/query").subscribe(res => {
       this.customers = [];
       this.customers = res.body;
     })
-  }
+  };
 
   saveUser() {
     let user = this.user.value;

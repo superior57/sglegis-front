@@ -86,7 +86,7 @@ export class UsersComponent implements OnInit {
     if (this.currentUser.role === roles.admin) {
       this.getUsers(undefined);
     } else {
-      this.getUsersByGroup(this.currentUser.customer_group_id);
+      this.getUsersByCustomer(this.currentUser.customer_id);
     }
   }
   
@@ -104,7 +104,7 @@ export class UsersComponent implements OnInit {
       if (this.currentUser.role === roles.admin) {
         this.getUsers(undefined);
       } else {
-        this.getUsersByGroup(this.currentUser.customer_group_id);
+        this.getUsersByCustomer(this.currentUser.customer_id);
       }      
       return;
     })
@@ -118,13 +118,13 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  getUsersByGroup(groupId) {
+  getUsersByCustomer(customer_id) {
     let p: any = new Object();
     p.orderby = "user_name";
     p.direction = "asc";
-    p.fields = "customer_group_id";
+    p.fields = "customer_id";
     p.ops = "eq";
-    p.values = groupId;
+    p.values = customer_id;
     this.crud.GetParams(p, "/users/query").subscribe(res => {
       this.rows = [];
       this.rows = res.body;
