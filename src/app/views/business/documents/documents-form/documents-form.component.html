@@ -8,7 +8,7 @@
       <div fxFlex="60" class="pr-1">
         <mat-form-field class="full-width">
           <mat-select placeholder="Âmbito *" [formControl]="documentForm.controls['document_scope_id']" >
-            <mat-option *ngFor="let document_scope of documentScopes" [value]="document_scope.document_scope_id">
+            <mat-option *ngFor="let document_scope of documentScopes" [value]="document_scope.document_scope_id" (change)="prepareStatesCities($event);">
               {{document_scope.document_scope_description}} </mat-option>            
           </mat-select>
         </mat-form-field>
