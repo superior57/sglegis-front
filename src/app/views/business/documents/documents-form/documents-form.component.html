@@ -84,7 +84,7 @@
         <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
 
           <div fxFlex="100" class="mt-1">            
-            <button mat-raised-button color="primary" type="button" (click)="newAttachment()" [disabled]="!documentForm.value.document_id">Importar novo documento.</button>
+            <button mat-raised-button color="primary" type="button" (click)="newAttachment()" [disabled]="documentForm.invalid || (currentUser.role !== roles.admin || currentUser.user_profile_type !== profile.gestor)" [disabled]="!documentForm.value.document_id">Importar novo documento.</button>
             <span fxFlex></span>
           </div>
           
@@ -95,7 +95,7 @@
           [rowHeight]="'35'" [scrollbarH]="true" [messages]="{emptyMessage: ''}">
           <ngx-datatable-column name="Excluir" [flexGrow]="0" [width]="80">
             <ng-template let-row="row" ngx-datatable-cell-template>
-              <button mat-icon-button mat-sm-button color="warn" (click)="removeAttachment(row)">
+              <button mat-icon-button mat-sm-button color="warn" [disabled]="documentForm.invalid || (currentUser.role !== roles.admin)" (click)="removeAttachment(row)">
                 <mat-icon>delete</mat-icon>
               </button>
             </ng-template>
@@ -131,7 +131,7 @@
         <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
 
           <div fxFlex="100" class="mt-1">
-            <button mat-raised-button color="primary" type="button" (click)="newItem()" [disabled]="(!documentForm.controls['document_id'].value)" >Incluir novo item.</button>
+            <button mat-raised-button color="primary" type="button" (click)="newItem()" [disabled]="documentForm.invalid || (currentUser.role !== roles.admin || currentUser.user_profile_type !== profile.gestor)" [disabled]="(!documentForm.controls['document_id'].value)">Incluir novo item</button>
             <span fxFlex></span>
           </div>
         </div>
@@ -153,7 +153,7 @@
 
           <ngx-datatable-column name="Editar" [flexGrow]="0" [width]="80">
             <ng-template let-row="row" ngx-datatable-cell-template>
-              <button mat-icon-button mat-sm-button color="warn" >
+              <button mat-icon-button mat-sm-button color="warn" *ngIf="(currentUser.role === roles.admin)">
                 <mat-icon (click)="editItem(row)">edit</mat-icon>
               </button>
             </ng-template>
@@ -169,13 +169,11 @@
   <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap" class="mat-dialog-content">
     <div fxFlex="100" class="mt-1">
       <span fxFlex *ngIf="!this.data.new"></span>
-      <button mat-raised-button color="accent" type="button" (click)="deleteDocument()" [disabled]="currentUser.role !== roles.admin || currentUser.user_profile_type !== profile.gestor"
-        *ngIf="!this.data.new">Excluir</button>
+      <button mat-raised-button color="accent" type="button" (click)="deleteDocument()" [disabled]="currentUser.role !== roles.admin" *ngIf="!this.data.new">Excluir</button>
       <span fxFlex></span>
       <button mat-raised-button color="warn" type="button" (click)="dialogRef.close('NOK')">Fechar</button>
       <span fxFlex></span>
-      <button mat-raised-button class="mat-primary" type="button" 
-        [disabled]="documentForm.invalid || (currentUser.role !== roles.admin || currentUser.user_profile_type !== profile.gestor)" (click)="saveDocument()">Gravar</button>
+      <button mat-raised-button class="mat-primary" type="button" [disabled]="documentForm.invalid || (currentUser.role !== roles.admin || currentUser.user_profile_type !== profile.gestor)" (click)="saveDocument()">Gravar</button>
       <span fxFlex></span>
     </div>
   </div>
