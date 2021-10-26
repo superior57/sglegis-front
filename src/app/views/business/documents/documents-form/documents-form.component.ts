@@ -235,12 +235,18 @@ export class DocumentsFormComponent implements OnInit {
   }
 
   getItems(documentId) {
+
+    let params = {
+      "orderby": ["document_item_order", "document_item_number"],
+      "direction": "asc"
+    };
+
     if (documentId)
-    this.crudService.GetParams({ "orderby": "document_item_order, document_item_number", "direction": "asc" }, "/documentitem/items/" + documentId).subscribe(res => {
-      if (res.status == 200) {
-        this.documentsItem = [];
-        this.documentsItem = res.body;
-      }
+      this.crudService.GetParams(params, "/documentitem/items/" + documentId).subscribe(res => {
+        if (res.status == 200) {
+          this.documentsItem = [];
+          this.documentsItem = res.body;
+        }
 
     });
   }

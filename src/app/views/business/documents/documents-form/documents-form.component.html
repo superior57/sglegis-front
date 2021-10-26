@@ -8,8 +8,8 @@
       <div fxFlex="60" class="pr-1">
         <mat-form-field class="full-width">
           <mat-select placeholder="Âmbito *" [formControl]="documentForm.controls['document_scope_id']" >
-            <mat-option *ngFor="let document_scope of documentScopes" [value]="document_scope.document_scope_id" (change)="prepareStatesCities($event);">
-              {{document_scope.document_scope_description}} </mat-option>            
+            <mat-option *ngFor="let scope of documentScopes" [value]="scope.document_scope_id" (change)="prepareStatesCities($event);">
+              {{scope.document_scope_description}} </mat-option>            
           </mat-select>
         </mat-form-field>
       </div>
@@ -137,7 +137,7 @@
         </div>
         <br />
 
-        <ngx-datatable class="material" [rows]="documentsItem" [columnMode]="'standard'" [headerHeight]="35" [footerHeight]="0"
+        <ngx-datatable class="material" [rows]="documentsItem" [columnMode]="'force'" [headerHeight]="35" [footerHeight]="0"
           [rowHeight]="'35'" [scrollbarH]="true" [messages]="{emptyMessage: ''}">
           
           <ngx-datatable-column name="Item" [width]="200">
@@ -145,7 +145,7 @@
               {{row["document_item_number"]}}
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="Descrição" [width]="300">
+          <ngx-datatable-column name="Descrição" [width]="450">
             <ng-template let-row="row" ngx-datatable-cell-template>
               {{row["document_item_description"]}}
             </ng-template>
