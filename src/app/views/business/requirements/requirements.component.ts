@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar, MatDialogRef } from '@angular/material';
+import { GradeComponent } from 'app/components/common/grade/grade.component';
 import { roles } from 'app/models/auth/roles';
 import { CampoBusca } from 'app/models/base/negocio/CampoBusca';
 import { dialog } from 'app/models/size/size';
@@ -64,7 +65,7 @@ export class RequirementsComponent implements OnInit {
     this.loadConformity();
     this.loadPraticalOrder();
     this.setConfigSearch();
-    this.getAuditRequirements(undefined);
+    //this.getAuditRequirements(undefined);
   }
 
   onFilterValueChange(type: string, value: any) {

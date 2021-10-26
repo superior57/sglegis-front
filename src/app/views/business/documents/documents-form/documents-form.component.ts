@@ -236,7 +236,7 @@ export class DocumentsFormComponent implements OnInit {
 
   getItems(documentId) {
     if (documentId)
-    this.crudService.GetParams({ "orderby": "document_item_order", "direction": "asc" }, "/documentitem/items/" + documentId).subscribe(res => {
+    this.crudService.GetParams({ "orderby": "document_item_order, document_item_number", "direction": "asc" }, "/documentitem/items/" + documentId).subscribe(res => {
       if (res.status == 200) {
         this.documentsItem = [];
         this.documentsItem = res.body;

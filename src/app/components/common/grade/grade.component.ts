@@ -33,6 +33,7 @@ export class GradeComponent implements OnInit {
   @Input() ActionButtonStatus: boolean = false;
   @Input() actionButtonCaption: String;
   @Input() syncOnInit: boolean = false;
+  @Input() initFilterOpened: boolean = false;
   @Output() actionButtonEvent: EventEmitter<any> = new EventEmitter();
   @Output() PesquisarRegistro: EventEmitter<any> = new EventEmitter();
   @Output() IncluirRegistro: EventEmitter<any> = new EventEmitter();
@@ -59,7 +60,7 @@ export class GradeComponent implements OnInit {
     private eRef: ElementRef) { }
 
   ngOnInit() {    
-    this.finderPanel = false;
+    this.finderPanel = this.initFilterOpened;
     if (this.BtnIncluir == undefined) {
       this.BtnIncluir = true;
     }    

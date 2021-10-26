@@ -49,7 +49,7 @@ export class DocumentsComponent implements OnInit  {
 
   prepareScreen() {  
     this.setConfigSearch();
-    this.getDocuments(undefined);
+    //this.getDocuments(undefined);
   }
 
   onFilterValueChange(type: string, value: any) {
