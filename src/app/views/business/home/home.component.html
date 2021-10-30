@@ -2,22 +2,132 @@
   <div fxFlex="100">
     <mat-card class="default">
       <mat-card-title class="">
-        
-        
       </mat-card-title>
-      <!-- <mat-card-subtitle>Previsto vs Realizado</mat-card-subtitle> -->
-      <mat-card-content class="p-0" [style.height]="'90%'">
-        <p style="font-size: 36px; margin: 20px;text-align: center">Bem vindo a Unity</p>
-        <br/>
-        <br/>
-        <div fxLayout="row" fxLayoutWrap="wrap" style="justify-content: center;height: 100%;">
-          <img src="assets/images/logo_unity.png" alt="" class="app-logo" [routerLink]="['/home']"/>
-        </div>
-        <br/>
-        <br/>
-        
-        
-      </mat-card-content>
+        <mat-card-content class="p-0" [style.height]="'90%'">
+          <p style="font-size: 36px; margin: 20px;text-align: center">Bem vindo a Unity</p>
+          <br/>
+          <br/>
+          <div fxLayout="row" fxLayoutWrap="wrap" style="justify-content: center;height: 100%;">
+            <img src="assets/images/logo_unity.png" alt="" class="app-logo" [routerLink]="['/home']"/>
+          </div>
+          <br/>
+          <br/>
+        </mat-card-content>
     </mat-card>
   </div>
+</div>
+
   <!-- Fullwidth chart -->
+  <div fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlex="100">
+      <mat-card class="default">
+        <mat-card-title class="">
+          <span>Histórico de Conformidade x Não Conformidade</span>
+          <span fxFlex></span>
+        </mat-card-title>
+        <mat-card-subtitle> </mat-card-subtitle>
+        <!-- <mat-divider></mat-divider> -->
+        <mat-card-content class="p-0" [style.height]="'300px'">
+          <canvas 
+            height="240"
+            baseChart 
+            class="chart m-0"
+            [datasets]="lineChartSteppedData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"></canvas>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  
+  <div fxLayout="row" fxLayoutWrap="wrap">
+    <!-- Gallery and chart column -->
+    <div fxFlex="100" fxFlex.gt-sm="100" fxLayout="column">
+      <mat-card class="p-0">
+        <mat-card-title class="">
+          <div class="card-title-text">
+            <span>Responsáveis (Conformidade x Não Conformidade) | (Aspectos)</span>
+            <span fxFlex></span>
+          </div>
+          <!-- <mat-divider></mat-divider> -->
+        </mat-card-title>
+        <mat-card-content class="p-0">
+        <div fxLayout="row" fxLayoutWrap="wrap" class="doughnut-grid text-center">
+          <div fxFlex="50" class="doughnut-grid-item">
+              <canvas 
+              id="chart1"
+              height="100"
+              baseChart
+              class="chart"
+              [data]="doughnutChartData1"
+              [options]="doughnutOptions1"
+              [labels]="doughnutLabels"
+              [colors]="doughnutChartColors1"
+              [chartType]="doughnutChartType"></canvas>
+              <small>{{data1}} Não Conformidades de {{data1 + data2}} Total</small>
+          </div>
+          <div fxFlex="50" class="doughnut-grid-item">
+            <canvas 
+              id="chart2"
+              height="100" 
+              baseChart 
+              class="chart"
+              [data]="doughnutChartData2"
+              [options]="doughnutOptions2"
+              [labels]="doughnutLabels"
+              [colors]="doughnutChartColors2"
+              [chartType]="doughnutChartType"></canvas>
+              <small>Tasks: 8/12</small>
+          </div>
+        </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutWrap="wrap">
+    <div fxFlex="100">
+      <mat-card class="p-0">
+        <mat-card-title class="">
+          <div class="card-title-text">
+            <span>Conformidade Geral - Aplicável = SIM (Conformidade x Não Conformidade)</span>
+            <span fxFlex></span>
+            <!-- <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu2">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu2="matMenu">
+              <button mat-menu-item>
+                <mat-icon>settings</mat-icon>
+                <span>Campaign Settings</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>do_not_disturb</mat-icon>
+                <span>Disable All Campaigns</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>close</mat-icon>
+                <span>Remove panel</span>
+              </button>
+            </mat-menu> -->
+          </div>
+          <mat-divider></mat-divider>
+        </mat-card-title>
+        <mat-card-content>
+        <div class="mb-1" *ngFor="let item of generalCompliance">
+          <p class="mb-05 text-muted">{{ item.conformity_desc }}</p>
+            <mat-progress-bar
+              class=""
+              color="primary"
+              mode="determinate"
+              [value]="item._percentage "
+            >
+          </mat-progress-bar>
+        </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>

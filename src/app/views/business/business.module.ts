@@ -23,7 +23,9 @@ import {
   MatAutocompleteModule,
   MatRadioModule,
   MatTabsModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatProgressBarModule,
+  MatGridListModule
 
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -62,6 +64,7 @@ import { unitsResponsibleFormComponent } from './units/units-responsible-form/un
 import { ActionPlanFormComponent } from './requirements/action-plan-form/action-plan-form.component';
 import { AttachmentsDownloadComponent } from './requirements/attachments-download/attachments-download.component';
 import { AuditsAttachmentFormComponent } from './requirements/audits-attachment-form/audits-attachment-form.component';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: "right",
@@ -108,6 +111,9 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     MatAutocompleteModule,
     NgxMaskModule.forRoot(),
     BusinessRoutingModule,
+    ChartsModule,
+    MatProgressBarModule,
+    MatGridListModule
     // MaterialFileInputModule
   ],
   declarations: [
