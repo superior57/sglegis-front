@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, SimpleChanges } from '@angular/core';
 import { getFields } from 'app/helpers/utils.functions';
 import { CRUDService } from 'app/services/negocio/CRUDService/CRUDService';
-
+import { AuthGuard } from 'app/services/auth/auth.guard';
+import { roles } from 'app/models/auth/roles';
 
 @Component({
   selector: 'app-home',
@@ -11,12 +12,14 @@ import { CRUDService } from 'app/services/negocio/CRUDService/CRUDService';
 
 export class HomeComponent implements OnInit {
   lastSearch: any;
+  currentUser: any = {};
   generalCompliance: any;
 
 
 
 constructor(
   private crud: CRUDService,
+  private auth: AuthGuard,
 ) { };
 
 
@@ -40,9 +43,19 @@ constructor(
   }
 
   prepareScreen() {
-    this.getResponsibleByAspect(undefined);
-    this.getResponsibleByConformity(undefined);
-    this.getGeneralCompliance(undefined);
+    this.currentUser = this.auth.getUser();
+
+    if (this.currentUser.role !== roles.admin) {
+      this.lastSearch = {
+        customer_id: this.currentUser.customer_id
+      }
+    }
+
+    this.getResponsibleByAspect(this.lastSearch);
+    this.getResponsibleByConformity(this.lastSearch);
+    this.getGeneralCompliance(this.lastSearch);
+    this.getCumulativeCompliance
+      (this.lastSearch);
   }
 
   //#region line chart
@@ -115,7 +128,6 @@ constructor(
 
   //#endregion
 
-
   //#region doughnut Chart
 
 
@@ -142,6 +154,7 @@ constructor(
       enabled: true
     }
   };
+  total1: number;
 
   doughnutOptions2: any = {
     cutoutPercentage: 85,
@@ -159,6 +172,7 @@ constructor(
       enabled: true
     }
   };
+  total2: number;
   
   doughnutLabels = [];
   doughnutChartData1: number[] = [];// = [this.data1, (this.total1 - this.data1)];
@@ -167,42 +181,50 @@ constructor(
 
 
   //#endregion
+  
+  
+  getCumulativeCompliance(parameter) {
+    this.crud.GetParams(parameter, "/dashboard/cumulative_compliance").subscribe(res => {
+      
+      // const dados: [] = res.body;
+      // dados.forEach(d => {
+      //   this.lineChartSteppedData.push({
+      //     data: dados.reduce((a, b) => {
+      //       a.conformity.
+      //     })
+      //   }
+      //   );
+      // });
+      return res.body;
+    });
+  }
 
-
-  getGeneralCompliance(parameter: any) {
-    let p: any = new Object();
-    // p.orderby = "area_name";
-    // p.direction = "asc";
-    this.lastSearch = p;
-    this.crud.GetParams(this.lastSearch, "/dashboard/general_compliance").subscribe(res => {
+  getGeneralCompliance(parameter) {
+    this.crud.GetParams(parameter, "/dashboard/general_compliance").subscribe(res => {
       this.generalCompliance = res.body
     });
   }
 
-  getResponsibleByConformity(parameter: any) {    
-    let p: any = new Object();
-    // p.orderby = "area_name";
-    // p.direction = "asc";
-    this.lastSearch = p;
-    this.crud.GetParams(this.lastSearch, "/dashboard/responsible_aspect").subscribe(res => {
+  getResponsibleByConformity(parameter) {    
+    this.crud.GetParams(parameter, "/dashboard/responsible_conformity").subscribe(res => {
       const dados = res.body;
-      const labels = getFields(dados, 'unit_aspect_responsible_name');
+      const labels = getFields(dados, 'unit_aspect_responsible_name', 'SEM RESPONSÁVEL');
       const values = getFields(dados, '_count');
+
+      this.total1 = values.reduce((a, b) => a + b, 0);
 
       this.doughnutLabels = labels;
       this.doughnutChartData1 = values;
-    })
+    });
   }
 
-  getResponsibleByAspect(parameter: any) {    
-    let p: any = new Object();
-    // p.orderby = "area_name";
-    // p.direction = "asc";
-    this.lastSearch = p;
-    return this.crud.GetParams(this.lastSearch, "/dashboard/responsible_conformity").toPromise().then(res => {
+  getResponsibleByAspect(parameter) {    
+    return this.crud.GetParams(parameter, "/dashboard/responsible_aspect").subscribe(res => {
       const dados = res.body;
-      const labels = getFields(dados, 'unit_aspect_responsible_name');
+      const labels = getFields(dados, 'unit_aspect_responsible_name', 'SEM RESPONSÁVEL');
       const values = getFields(dados, '_count');
+
+      this.total2 = values.reduce((a, b) => a + b, 0);
 
       this.doughnutLabels = labels;
       this.doughnutChartData2 = values;

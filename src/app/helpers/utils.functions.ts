@@ -8,9 +8,11 @@ export function dateFormat(date: any, format: string) {
     return null;
 }
 
-export function getFields(input, field) {
+export function getFields(input, field, defaultnull = undefined) {
     var output = [];
-    for (var i=0; i < input.length ; ++i)
-        output.push(input[i][field]);
+    for (var i = 0; i < input.length; ++i) {
+        let val = input[i][field];
+        output.push(!val ? defaultnull : val);
+    }
     return output;
 }

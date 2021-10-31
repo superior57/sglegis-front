@@ -49,7 +49,7 @@
       <mat-card class="p-0">
         <mat-card-title class="">
           <div class="card-title-text">
-            <span>Responsáveis (Conformidade x Não Conformidade) | (Aspectos)</span>
+            <span>Responsáveis (Não Conformidade) | (Aspectos)</span>
             <span fxFlex></span>
           </div>
           <!-- <mat-divider></mat-divider> -->
@@ -67,7 +67,7 @@
               [labels]="doughnutLabels"
               [colors]="doughnutChartColors1"
               [chartType]="doughnutChartType"></canvas>
-              <small>{{data1}} Não Conformidades de {{data1 + data2}} Total</small>
+              <small>Total Não Conformidades: {{total1}}</small>
           </div>
           <div fxFlex="50" class="doughnut-grid-item">
             <canvas 
@@ -80,7 +80,7 @@
               [labels]="doughnutLabels"
               [colors]="doughnutChartColors2"
               [chartType]="doughnutChartType"></canvas>
-              <small>Tasks: 8/12</small>
+              <small>Total Aspectos com Responsáveis: {{total1}}</small>
           </div>
         </div>
         </mat-card-content>
