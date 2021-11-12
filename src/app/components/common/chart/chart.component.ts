@@ -14,8 +14,9 @@ highcharts3D(Highcharts);
 })
 export class ChartComponent implements OnInit {
 
-  @Input() options: object = {};
+  @Input() options: any = {};
   @Input() title: string = "";
+  @Input() noData: boolean = true;
 
   highcharts = Highcharts;
 

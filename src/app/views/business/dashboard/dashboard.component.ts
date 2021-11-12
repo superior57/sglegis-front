@@ -1,7 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { roles } from 'app/models/auth/roles';
 import { Coluna } from 'app/models/base/Coluna';
 import { CampoBusca } from 'app/models/base/negocio/CampoBusca';
+import { AuthGuard } from 'app/services/auth/auth.guard';
 import { CRUDService } from 'app/services/negocio/CRUDService/CRUDService';
 
 @Component({
@@ -15,9 +17,10 @@ export class DashboardComponent implements OnInit {
 
   AuxColunas = [];
   buscarForm: FormGroup;
-  public finderPanel: boolean = false;
+  public finderPanel: boolean = true;
   public formReady: boolean = false;
   public showFilter: boolean = false;
+  currentUser: any;
   
   @ViewChild('buscadorForm') public buscadorForm: ElementRef;
   @ViewChild('txtFinder') public txtFinder: ElementRef;
@@ -32,12 +35,15 @@ export class DashboardComponent implements OnInit {
     "RELATÓRIO DE NÃO CONFORMIDADES POR ASPECTO"
   ]
   chartData: Array<any> = [];
+  noFormData: boolean = true;
   
   constructor(
-    private crud: CRUDService
+    private crud: CRUDService,
+    private auth: AuthGuard
   ) { }
 
   ngOnInit() {
+    this.currentUser = this.auth.getUser();
     this.prepareSearch();
     this.prepareScreen();
   }
@@ -50,11 +56,12 @@ export class DashboardComponent implements OnInit {
       unit_id: form.customer_unit_id || null,
       area_id: form.area_id || null
     };
+    this.noFormData = Object.keys(form).length === 0;
 
     const chart1 = await this.getDataChart1(params),
           chart2 = await this.getDataChart2(params),
           chart3 = await this.getDataChart3(params),
-          chart4 = await this.getDataChart4(params);        
+          chart4 = await this.getDataChart4(params);            
 
     this.chartData = [
       chart1,
@@ -68,14 +75,18 @@ export class DashboardComponent implements OnInit {
   async prepareSearch() {
     this.buscarForm = new FormGroup({});    
     let groups = await this.getGroups();    
-    let areas = await this.getAreas();
+    let areas = await this.getAreas();    
 
     this.SearchFields = [      
-      new CampoBusca("customer_group_id", "Grupo", 50, "", "LIST", groups, "customer_group_name", "customer_group_id"),
+      new CampoBusca("customer_group_id", "Grupo", 50, "", "LIST", groups.map(g => ({
+        ...g,
+        disabled: this.currentUser.role !== roles.admin && g.customer_group_id !== this.currentUser.customer_group_id
+      })), "customer_group_name", "customer_group_id"),
       new CampoBusca("customer_id", "Matriz", 50, "", "LIST", [], "customer_business_name", "customer_id"),
       new CampoBusca("customer_unit_id", "Unidade", 50, "", "LIST", [], "customer_unit_name", "customer_unit_id"),
       new CampoBusca("area_id", "Sist.Gestão", 50, "", "LIST", areas, "area_name", "area_id"),
     ];
+    
     this.prepareSearchForm();
   }
   prepareSearchForm() {

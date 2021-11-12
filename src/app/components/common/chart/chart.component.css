@@ -1,5 +1,9 @@
-.highchart-wrapper {
-    
+.highchart-wrapper .no-data {
+    min-height: 250px;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
 }
 
 @media screen and (min-width: 578px) {

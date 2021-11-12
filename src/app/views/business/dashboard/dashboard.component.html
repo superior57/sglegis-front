@@ -38,7 +38,7 @@
 
                   <mat-form-field class="full-width" *ngIf="campo.tipoCampo=='LIST' ">
                     <mat-select [formControl]="buscarForm.controls[campo.nomeCampo]" [placeholder]="campo.labelCampo" [disabled]="campo.disabled">
-                      <mat-option *ngFor="let item of campo.lista" [value]="item[campo.fieldValue]" [disabled]="campo.disabled">
+                      <mat-option *ngFor="let item of campo.lista" [value]="item[campo.fieldValue]" [disabled]="campo.disabled || item.disabled">
                         {{item[campo.fieldText]}} </mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -78,6 +78,7 @@
         <app-chart
           [options]="chart.options"
           [title]="chart.title"
+          [noData]="noFormData"
         ></app-chart>
       </div>
     </mat-card> 

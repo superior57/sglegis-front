@@ -2,9 +2,16 @@
   <div>
     <div class="title" >{{ title }}</div>
     <highcharts-chart
+      *ngIf="options.series[0].data.length > 0 && !noData; else noDataBlock"
       [Highcharts]="highcharts"
       [options]="options"
     >
     </highcharts-chart>
+
+    <ng-template #noDataBlock>
+      <div class="no-data">
+        <div>Sem dados</div>
+      </div>
+    </ng-template>
   </div>
 </div>
