@@ -5,6 +5,7 @@ import More from "highcharts/highcharts-more";
 More(Highcharts);
 
 import highcharts3D from "highcharts/highcharts-3d";
+import { getDecimalGroupFormat } from 'app/helpers/utils.functions';
 highcharts3D(Highcharts);
 
 @Component({
@@ -53,7 +54,7 @@ export class ChartComponent implements OnInit {
             textOutline: 0
           },
           formatter: function () {
-            return this.y > 5 ? this.y + '%' : null;
+            return this.y > 5 ? getDecimalGroupFormat(this.y, 3, 2) + '%' : null;
           },
         },
         showInLegend: true

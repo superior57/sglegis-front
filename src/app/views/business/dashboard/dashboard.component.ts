@@ -234,7 +234,12 @@ export class DashboardComponent implements OnInit {
                 ]
             },
             yAxis: {
-                title: ""
+                title: "",
+                labels: {
+                  formatter: function() {
+                    return getDecimalGroupFormat(this.value, 3, 2)
+                  }
+                }                
             },
             legend: {
                 enabled: true,
@@ -333,7 +338,7 @@ export class DashboardComponent implements OnInit {
                     textOutline: 0
                   },
                   formatter: function () {
-                    return this.y > 10 ? this.y + '%' : null;
+                    return this.y > 10 ? getDecimalGroupFormat(this.y, 3, 2) + '%' : null;
                   },
                 },
                 showInLegend: true
@@ -392,7 +397,7 @@ export class DashboardComponent implements OnInit {
                     textOutline: 0
                   },
                   formatter: function () {
-                    return this.y > 8 ? this.y + '%' : null;
+                    return this.y > 8 ? getDecimalGroupFormat(this.y, 3, 2) + '%' : null;
                   },
                 },
                 showInLegend: true
