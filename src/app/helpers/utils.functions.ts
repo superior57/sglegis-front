@@ -16,3 +16,19 @@ export function getFields(input, field, defaultnull = undefined) {
     }
     return output;
 }
+
+const getGroupCount = (groupDigits) => {
+	let strRes = "";
+	for (let i = 0; i < 3; i ++) 
+		strRes += "h"
+	return strRes
+}
+
+export const getDecimalGroupFormat = (number = 0, groupDigits = 3, fractionDigits = 2) => {
+	return new Intl.NumberFormat(getGroupCount(groupDigits), {
+		style: 'decimal',
+		useGrouping: true,
+		minimumFractionDigits: fractionDigits,
+		maximumFractionDigits: fractionDigits
+	}).format(number)
+}

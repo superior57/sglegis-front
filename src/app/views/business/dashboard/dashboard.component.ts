@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { getDecimalGroupFormat } from 'app/helpers/utils.functions';
 import { roles } from 'app/models/auth/roles';
 import { Coluna } from 'app/models/base/Coluna';
 import { CampoBusca } from 'app/models/base/negocio/CampoBusca';
@@ -244,7 +245,12 @@ export class DashboardComponent implements OnInit {
                 labelFormat: "{name} %"
             },
             tooltip: {
-              valueSuffix: '%'
+              pointFormatter: function() {
+                return `
+                  Percentagem: <strong>${ getDecimalGroupFormat(this.y, 3, 2) }%</strong> </br>
+                  Quantidade: <strong>${ this.quantity }</strong>
+                `
+              }
             },
             series: [
                 {
@@ -252,6 +258,7 @@ export class DashboardComponent implements OnInit {
                     data: [
                       ...data.map((d, i) => ({ 
                         y: Number(d._percentage),
+                        quantity: Number(d._count),
                         color: colors[i % colors.length],
                         name: d._labels
                       }))
@@ -274,13 +281,19 @@ export class DashboardComponent implements OnInit {
               type: 'pie'
             },
             tooltip: {
-              valueSuffix: '%'
+              pointFormatter: function() {
+                return `
+                  Percentagem: <strong>${ getDecimalGroupFormat(this.y, 3, 2) }%</strong> </br>
+                  Quantidade: <strong>${ this.quantity }</strong>
+                `
+              }
             },
             series: [{
                 name: "",
                 data: [
                   ...data.map((d, i) => ({ 
                     y: Number(d._percentage),
+                    quantity: Number(d._count),
                     color: colors[i % colors.length],
                     name: d._labels
                   }))
@@ -327,13 +340,19 @@ export class DashboardComponent implements OnInit {
               }
             },
             tooltip: {
-              valueSuffix: '%'
+              pointFormatter: function() {
+                return `
+                  Percentagem: <strong>${ getDecimalGroupFormat(this.y, 3, 2) }%</strong> </br>
+                  Quantidade: <strong>${ this.quantity }</strong>
+                `
+              }
             },
             series: [{
                 name: "",
                 data: [
                   ...data.map((d, i) => ({ 
                     y: Number(d._percentage),
+                    quantity: Number(d._count),
                     color: colors[i % colors.length],
                     name: d._labels
                   }))
@@ -380,13 +399,19 @@ export class DashboardComponent implements OnInit {
               }
             },
             tooltip: {
-              valueSuffix: '%'
+              pointFormatter: function() {
+                return `
+                  Percentagem: <strong>${ getDecimalGroupFormat(this.y, 3, 2) }%</strong> </br>
+                  Quantidade: <strong>${ this.quantity }</strong>
+                `
+              }
             },
             series: [{
                 name: "",
                 data: [
                   ...data.map((d, i) => ({ 
                     y: Number(d._percentage),
+                    quantity: Number(d._count),
                     color: colors[i % colors.length],
                     name: d._labels
                   }))
