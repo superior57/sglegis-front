@@ -8,17 +8,26 @@ import { AspectsComponent } from './aspects/aspects.component';
 import { CustomerGroupsComponent } from './customer-groups/customer-groups.component';
 import { CustomersFormsComponent } from './customers/customers-forms/customers-forms.component';
 import { CustomersComponent } from './customers/customers.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { HomeComponent } from './home/home.component';
 import { RequirementsComponent } from './requirements/requirements.component';
 import { unitsComponent } from './units/units.component';
 import { UsersComponent } from './users/users.component';
-
+ 
 const routes: Routes = [  
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
+  },
+  {
+    path: '',
+    children: [{
+      path: 'dashboard',
+      component: DashboardComponent,
+      data: { title: 'Dashboard', breadcrumb: 'Dashboard' }
+    }]
   },
   {
     path: '',

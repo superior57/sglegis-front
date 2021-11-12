@@ -1,0 +1,15 @@
+  
+  .show {display: block;}
+
+  .main-wrapper {
+      margin-top: 10px;
+      padding: 0 15px;
+  }
+
+  .py-3 {
+      padding: 15px 0;
+  }
+
+  .chart-card {
+      margin-bottom: 30px;
+  }

@@ -216,7 +216,6 @@ export class unitsFormComponent implements OnInit {
   }
 
   getCustomers(group_id) {
-    console.log('123', group_id);
     
     if (group_id != 0) {
       let p: any = new Object();

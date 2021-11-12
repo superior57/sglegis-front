@@ -1,4 +1,16 @@
 <mat-nav-list class="" role="list">
+  <div>
+    <mat-list-item sideNavAccordion 
+    class="sidebar-list-item" 
+    role="listitem" 
+    routerLinkActive="open">
+      <a routerLink="/cadastros/dashboard">
+        <span class="menu-item-tooltip" [matTooltip]="'Painel'" matTooltipPosition="right"></span>
+        <mat-icon>dashboard</mat-icon>
+        <span>Gráficos de indicadores</span>
+      </a>
+    </mat-list-item>
+  </div>  
   <div *ngFor="let item of menuItems">
     <mat-list-item sideNavAccordion class="sidebar-list-item" role="listitem" *ngIf="!item.Disabled && item.Type !== 'separator' && item.Type !== 'icon'"
       [ngClass]="{'has-submenu': item.Type === 'dropDown'}" routerLinkActive="open">

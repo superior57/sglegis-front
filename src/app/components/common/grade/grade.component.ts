@@ -89,7 +89,6 @@ export class GradeComponent implements OnInit {
 
   ngDoCheck() {
     if (this.syncOnInit) {
-      console.log('sync will work here');
       this.prepareScreen();
       this.syncOnInit = false;      
     }

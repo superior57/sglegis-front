@@ -1,0 +1,85 @@
+<div class="main">
+  <mat-toolbar color="primary" style="height: 40px;">
+    <div fxFlex class="search-bar" style="height: 80%">
+      <form class="top-search-form" [formGroup]="buscarForm" autocomplete="on" #buscadorForm>
+        <mat-icon role="img" style="cursor:pointer;" (click)="showFinderToggle()">search</mat-icon>
+        <input autofocus="true" placeholder="Procurar" type="text" style="height: 95%; padding: 0 0 0 10px;"
+          (click)="showFinderToggle()" class="txtFinder" #txtFinder readonly>
+        <mat-dialog-content class="corpo" style="all:initial">
+          <div *ngIf="(formReady)">
+            <div [ngClass]="finderPanel? 'dropdown-content show': 'dropdown-content'">
+              <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap" style="padding: 10px; font-size: 13px">
+                <div fxFlex="33" class="pr-1" *ngFor='let campo of SearchFields'>
+                  <mat-form-field class="full-width" *ngIf="(campo.tipoCampo =='string')">
+                    <input matInput 
+                        name="campo.nomeCampo" 
+                        [placeholder]="campo.labelCampo"
+                        [maxLength]="campo.maxLengthCampo" 
+                        [mask]="campo.maskCampo" 
+                        upperCase 
+                        type="text"
+                        [formControl]="buscarForm.controls[campo.nomeCampo]" 
+                        [readonly]="campo.disabled">
+                    <button mat-button *ngIf="buscarForm.controls[campo.nomeCampo]" matSuffix mat-icon-button
+                      aria-label="Limpar" (click)="buscarForm.controls[campo.nomeCampo].setValue('')" [disabled]="campo.disabled">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+
+                  <mat-form-field class="full-width" *ngIf="campo.tipoCampo=='DATA' ">
+                    <input matInput [name]="campo.nomeCampo" [placeholder]="campo.labelCampo"
+                      [maxLength]="campo.maxLengthCampo" [mask]="campo.maskCampo" upperCase type="date"
+                      [formControl]="buscarForm.controls[campo.nomeCampo]" [readonly]="campo.disabled">
+                    <button mat-button *ngIf="buscarForm.controls[campo.nomeCampo]" matSuffix mat-icon-button
+                      aria-label="Limpar" (click)="buscarForm.controls[campo.nomeCampo].setValue('')" [disabled]="campo.disabled">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+
+                  <mat-form-field class="full-width" *ngIf="campo.tipoCampo=='LIST' ">
+                    <mat-select [formControl]="buscarForm.controls[campo.nomeCampo]" [placeholder]="campo.labelCampo" [disabled]="campo.disabled">
+                      <mat-option *ngFor="let item of campo.lista" [value]="item[campo.fieldValue]" [disabled]="campo.disabled">
+                        {{item[campo.fieldText]}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap">
+                <div fxFlex="100" class="mt-1">
+                  <span fxFlex></span>
+                  <button mat-raised-button color="warn" type="button"
+                    (click)="finderPanel=!finderPanel">Fechar</button>
+                    <span fxFlex></span>
+                    <button mat-raised-button color="accent" type="button"
+                      (click)="clear()">Limpar filtros</button>                    
+                  <span fxFlex></span>
+                  <button mat-raised-button class="mat-primary" type="button" (click)="Search()">Procurar</button>
+                  <span fxFlex></span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </mat-dialog-content>
+      </form>
+    </div>    
+  </mat-toolbar>  
+
+  <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutWrap="wrap" style="padding-left: 20px;margin-top: 10px;" *ngIf="(showFilter)">
+      <mat-chip-list aria-label="Fish selection" *ngFor='let campo of SearchFields'>
+        <mat-chip *ngIf="(buscarForm.controls[campo.nomeCampo].value)">{{campo.labelCampo}} : {{ getValue(campo) }}</mat-chip>        
+      </mat-chip-list>
+  </div>
+
+  <div class="main-wrapper">
+    <mat-card *ngFor="let chart of chartData" class="chart-card mat-card-background full-width mb-3">
+      <div class="container py-3">
+        <app-chart
+          [options]="chart.options"
+          [title]="chart.title"
+        ></app-chart>
+      </div>
+    </mat-card> 
+  </div>
+</div>

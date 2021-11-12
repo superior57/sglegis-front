@@ -133,7 +133,6 @@ export class UsersFormComponent implements OnInit {
 
   disableUser() {
     const user = {...this.user.value};
-    console.log(user);
     
     user.is_disabled = user.is_disabled == 1 ? 0 : 1;
     this.confirm.confirm("Desabilitar usuário", (user.is_disabled == 1 ? ("Desabilitar usuário ") : ("Ativar usuário ")) + user.user_name + "?").subscribe(result => {
