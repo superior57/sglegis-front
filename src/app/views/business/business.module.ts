@@ -67,7 +67,7 @@ import { AuditsAttachmentFormComponent } from './requirements/audits-attachment-
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChartComponent } from 'app/components/common/chart/chart.component';
-import { HighchartsChartComponent } from "highcharts-angular";
+import { HighchartsChartModule } from "highcharts-angular";
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: "right",
@@ -118,6 +118,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     MatProgressBarModule,
     MatGridListModule,
     // MaterialFileInputModule,
+    HighchartsChartModule
   ],
   declarations: [
     GradeComponent,
@@ -132,8 +133,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     RequirementsComponent,
     AuditFormComponent,
     UsersComponent, UsersFormComponent, FileFieldComponent, DocumentsAttachementFormComponent, unitsResponsibleFormComponent, ActionPlanFormComponent, AttachmentsDownloadComponent, AuditsAttachmentFormComponent, DashboardComponent,
-    ChartComponent,
-    HighchartsChartComponent
+    ChartComponent
   ],
   exports: [MatAutocompleteModule],
   entryComponents: [CustomerGroupFormComponent,
